@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="login_failure">Unable to sign in with the provided credentials.</string>
+</resources>

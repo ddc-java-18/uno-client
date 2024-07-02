@@ -1,4 +1,4 @@
-# Android project proposal starter
+# UNO Capstone Client
 
 ## Summary
 

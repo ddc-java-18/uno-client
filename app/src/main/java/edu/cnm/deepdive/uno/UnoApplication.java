@@ -13,20 +13,25 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package edu.cnm.deepdive.appstarter;
+package edu.cnm.deepdive.uno;
 
 import android.app.Application;
+import androidx.appcompat.app.AppCompatDelegate;
+import dagger.hilt.android.HiltAndroidApp;
 
 /**
  * Initializes (in the {@link #onCreate()} method) application-level resources that require
  * static (or singleton) initialization. This class <strong>must</strong> be referenced in
  * {@code AndroidManifest.xml}, or it will not be loaded and used by the Android system.
  */
-public class AppStarterApplication extends Application {
+@HiltAndroidApp
+public class UnoApplication extends Application {
 
   @Override
   public void onCreate() {
     super.onCreate();
+    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+    // TODO: 7/2/24 Read night mode pref from setting.
   }
 
 }

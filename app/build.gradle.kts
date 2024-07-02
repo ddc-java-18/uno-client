@@ -18,6 +18,9 @@ import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.navigation.safeargs)
+    alias(libs.plugins.schema.parser)
     alias(libs.plugins.junit)
 }
 
@@ -39,7 +42,21 @@ android {
             "de.mannodermaus.junit5.AndroidJUnit5Builder"
 
         resValue("string", "app_name", project.property("appName") as String)
+        resValue("string", "base_url", getLocalProperty("baseUrl")!!)
+        resValue("string", "logging_level", getLocalProperty("loggingLevel")!!)
+        resValue("string", "client_id", getLocalProperty("clientId")!!)
 
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments(
+                    mapOf(
+                        "room.incremental" to "true",
+                        "room.expandProjection" to "true",
+                        "room.schemaLocation" to "$projectDir/schemas"
+                    )
+                )
+            }
+        }
     }
 
     buildTypes {
@@ -70,6 +87,12 @@ dependencies {
     implementation(libs.app.compat)
     implementation(libs.constraint.layout)
     implementation(libs.recycler.view)
+    implementation(libs.view.pager)
+
+    // Fragment & navigation libraries
+    implementation(libs.fragment)
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
 
     // Lifecycle (LiveData and ViewModel) libraries
     runtimeOnly(libs.lifecycle.viewmodel)
@@ -80,6 +103,34 @@ dependencies {
 
     // Material Design components
     implementation(libs.material)
+
+    // ReactiveX libraries
+    implementation(libs.rx.java)
+
+    // Room ORM libraries
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
+    implementation(libs.room.rx.java)
+
+    // GSon Library
+    implementation(libs.gson)
+
+    // Google Play sign-in library
+    implementation(libs.play.auth)
+
+    // Retrofit (REST client) libraries
+    implementation(libs.retrofit.core)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.retrofit.adapter.rx.java)
+
+    // Okhttp libraries
+    implementation(libs.okio)
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+
+    // Hilt dependency injection
+    implementation(libs.hilt.android.core)
+    annotationProcessor(libs.hilt.compiler)
 
     // Libraries for JVM-based testing.
     testImplementation(libs.junit.api)

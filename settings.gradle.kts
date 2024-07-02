@@ -31,5 +31,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "android-app-starter"
+rootProject.name = "uno-client"
 include(":app")
