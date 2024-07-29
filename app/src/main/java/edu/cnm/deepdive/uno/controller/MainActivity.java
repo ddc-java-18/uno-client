@@ -6,9 +6,11 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import dagger.hilt.android.AndroidEntryPoint;
 import edu.cnm.deepdive.uno.R;
 import edu.cnm.deepdive.uno.databinding.ActivityMainBinding;
 
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
   private ActivityMainBinding binding;
@@ -31,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
         .findFragmentById(R.id.nav_host_fragment))
         .getNavController();
     AppBarConfiguration appBarConfig = new AppBarConfiguration.Builder(
-        R.id.data_entry_fragment, R.id.settings_fragment, R.id.golftrack_fragment)
+        R.id.landing_fragment, R.id.game_fragment, R.id.results_fragment)
         .build();
     NavigationUI.setupActionBarWithNavController(this, navController, appBarConfig);
     NavigationUI.setupWithNavController(binding.navigator, navController);
-
+  }
 }

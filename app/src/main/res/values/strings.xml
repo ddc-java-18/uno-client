@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="login_failure">Unable to sign in with the provided credentials.</string>
+
+  <string name="game_title">Game</string>
+  <string name="results_title">Results</string>
+  <string name="landing_title">Landing</string>
+
+
 </resources>
