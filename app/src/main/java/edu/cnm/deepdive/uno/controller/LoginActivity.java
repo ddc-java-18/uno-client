@@ -42,10 +42,10 @@ public class LoginActivity extends AppCompatActivity {
 
   private void handleAccount(GoogleSignInAccount account) {
     if (account != null) {
-      // TODO: 7/2/24 Transfer to MainActivity 
-//      Intent intent = new Intent(this, MainActivity.class)
-//          .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//      startActivity(intent);
+
+      Intent intent = new Intent(this, MainActivity.class)
+          .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+      startActivity(intent);
     } else if (silent) {
 
     }
