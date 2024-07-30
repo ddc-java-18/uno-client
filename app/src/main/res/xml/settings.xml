@@ -3,5 +3,20 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
+<SeekBarPreference
+  android:key="player_max_pref"
+  android:title=" Maximum player game size"
+  app:min="@integer/player_pref_min"
+  android:max="@integer/player_pref_max"
+  android:defaultValue="@integer/player_pref_default"
+  app:showSeekBarValue="true"/>
+
+<DropDownPreference
+  android:key="@string/dark_mode_pref_key"
+  android:title="@string/dark_mode_pref_title"
+  android:icon="@drawable/moon_icon"
+  android:entries="@array/dark_mode_options"
+  android:entryValues="@array/dark_mode_values"
+  android:defaultValue="@string/dark_mode_pref_default"/>
 
 </PreferenceScreen>
