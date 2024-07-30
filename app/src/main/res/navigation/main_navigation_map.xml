@@ -10,6 +10,10 @@
     app:destination="@id/landing_fragment"/>
 
   <action
+    android:id="@+id/action_landingFragment_to_gameFragment"
+    app:destination="@id/game_fragment" />
+
+  <action
     android:id="@+id/navigate_to_results"
     app:destination="@id/results_fragment"/>
 
