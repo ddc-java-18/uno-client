@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
   private void handleAccount(GoogleSignInAccount account) {
     if (account != null) {
 
-      Intent intent = new Intent(this, MainActivity.class)
+      Intent intent = new Intent(this, LobbyActivity.class)
           .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
       startActivity(intent);
     } else if (silent) {

@@ -13,7 +13,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import dagger.hilt.android.AndroidEntryPoint;
 import edu.cnm.deepdive.uno.R;
-import edu.cnm.deepdive.uno.SettingsActivity;
 import edu.cnm.deepdive.uno.databinding.ActivityMainBinding;
 import edu.cnm.deepdive.uno.viewmodel.LoginViewModel;
 

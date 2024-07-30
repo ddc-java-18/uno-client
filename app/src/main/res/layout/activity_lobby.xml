@@ -5,7 +5,7 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   xmlns:app="http://schemas.android.com/apk/res-auto"
-  tools:context=".controller.LandingFragment">
+  tools:context=".controller.WaitingFragment">
 
   <ImageView
     android:id="@+id/uno_landing_logo"
@@ -24,16 +24,27 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/half_dynamic_spacing"
     app:layout_constraintTop_toBottomOf="@id/uno_landing_logo"
-    app:layout_constraintBottom_toTopOf="@id/landing_page_title"
+    app:layout_constraintBottom_toTopOf="@id/navigate_to_settings"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     android:text="@string/new_game"/>
+
+  <Button
+    android:id="@+id/navigate_to_settings"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/half_dynamic_spacing"
+    app:layout_constraintTop_toBottomOf="@id/start_a_new_game"
+    app:layout_constraintBottom_toTopOf="@id/landing_page_title"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:text="@string/game_settings"/>
 
   <TextView
     android:id="@+id/landing_page_title"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/half_dynamic_spacing"
+    android:layout_margin="@dimen/full_dynamic_spacing"
     android:text="@string/developer_credit"
     android:textAlignment="center"
     app:layout_constraintTop_toBottomOf="@id/start_a_new_game"
