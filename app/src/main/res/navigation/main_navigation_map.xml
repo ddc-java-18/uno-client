@@ -25,7 +25,7 @@
     android:id="@+id/waiting_fragment"
     android:label="New Game"
     android:name="edu.cnm.deepdive.uno.controller.SettingsFragment"
-    tools:layout="@layout/fragment_waiting"/>
+    tools:layout="@layout/fragment_loading"/>
 
   <fragment
     android:id="@+id/game_fragment"

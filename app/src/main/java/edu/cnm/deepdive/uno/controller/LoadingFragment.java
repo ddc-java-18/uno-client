@@ -7,19 +7,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import androidx.fragment.app.Fragment;
 import dagger.hilt.android.AndroidEntryPoint;
-import edu.cnm.deepdive.uno.databinding.FragmentWaitingBinding;
+import edu.cnm.deepdive.uno.databinding.FragmentLoadingBinding;
 
 
 @AndroidEntryPoint
-public class WaitingFragment extends Fragment {
+public class LoadingFragment extends Fragment {
 
   private Button navigateToSettingsButton;
-  private FragmentWaitingBinding binding;
+  private FragmentLoadingBinding binding;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    binding = FragmentWaitingBinding.inflate(inflater, container, false);
+    binding = FragmentLoadingBinding.inflate(inflater, container, false);
     return binding.getRoot();
   }
 }
