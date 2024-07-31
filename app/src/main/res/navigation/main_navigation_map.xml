@@ -11,7 +11,7 @@
 
   <action
     android:id="@+id/go_to_game_settings"
-    app:destination="@id/settings_fragment" />
+    app:destination="@id/settings_activity" />
 
   <action
     android:id="@+id/navigate_to_results"
@@ -40,7 +40,7 @@
     tools:layout="@layout/fragment_results"/>
 
   <activity
-    android:id="@+id/settings_fragment"
+    android:id="@+id/settings_activity"
     android:label="@string/settings_title"
     android:name="edu.cnm.deepdive.uno.controller.SettingsActivity"
     tools:layout="@layout/activity_settings"/>
@@ -50,7 +50,6 @@
     android:label="@string/lobby_title"
     android:name="edu.cnm.deepdive.uno.controller.LobbyActivity"
     tools:layout="@layout/activity_lobby"/>
-
 
 
 </navigation>

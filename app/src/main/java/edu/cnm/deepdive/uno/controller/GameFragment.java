@@ -36,7 +36,6 @@ public class GameFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
     binding = FragmentGameBinding.inflate(inflater, container, false);
     return binding.getRoot();
   }
@@ -64,18 +63,5 @@ public class GameFragment extends Fragment {
         .observe(lifecycleOwner, (user) -> {
           this.user = user;
         });
-
-    binding.createGameBtn.setOnClickListener((v) -> gameViewModel.createGame());
-    binding.getGameBtn.setOnClickListener((v) -> gameViewModel.getGame());
-    binding.startGameBtn.setOnClickListener((v) -> gameViewModel.startGame());
-    binding.submitMoveBtn.setOnClickListener(
-        (v) -> {
-          // TODO: 7/31/24 Get the card the user has selected.
-          Card testCard = new Card(Suit.BLUE, Rank.EIGHT);
-          testCard.setId("3494ab0e-1f03-4b33-bd54-e5e06dac61e1");
-          gameViewModel.makeMove(testCard, user);
-        }
-    );
-
   }
 }

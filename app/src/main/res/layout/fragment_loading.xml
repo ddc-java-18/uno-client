@@ -11,6 +11,7 @@
     android:id="@+id/current_players_in_game"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    app:layoutManager="com.google.android.material.carousel.CarouselLayoutManager"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintBottom_toTopOf="@id/start_a_new_game_once_full"
     app:layout_constraintStart_toStartOf="parent"
