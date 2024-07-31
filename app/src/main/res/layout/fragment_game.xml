@@ -7,16 +7,49 @@
   android:layout_height="match_parent"
   tools:context=".controller.GameFragment">
 
-<TextView
-android:layout_width="160dp"
-android:layout_height="160dp"
-android:layout_margin="@dimen/half_dynamic_spacing"
-android:text="@string/game_title"
-android:textAlignment="center"
-app:layout_constraintTop_toTopOf="parent"
-app:layout_constraintBottom_toBottomOf="parent"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintEnd_toEndOf="parent"/>
+  <Button
+    android:id="@+id/create_game_btn"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toTopOf="@id/get_game_btn"
+    android:text="create_game"
+    />
+
+  <Button
+    android:id="@+id/get_game_btn"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/create_game_btn"
+    app:layout_constraintBottom_toTopOf="@id/start_game_btn"
+    android:text="get_game"
+    />
+
+  <Button
+    android:id="@+id/start_game_btn"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/get_game_btn"
+    app:layout_constraintBottom_toTopOf="@id/submit_move_btn"
+    android:text="start_game"
+    />
+
+  <Button
+    android:id="@+id/submit_move_btn"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/start_game_btn"
+    app:layout_constraintBottom_toBottomOf="@id/get_game_btn"
+    android:text="make move"
+    />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
