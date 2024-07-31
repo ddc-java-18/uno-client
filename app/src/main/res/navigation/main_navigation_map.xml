@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/main_navigation_map"
+  app:startDestination="@id/lobby_activity">
+
+  <action
+    android:id="@+id/navigate_to_waiting_fragment"
+    app:destination="@id/landing_fragment"/>
+
+  <action
+    android:id="@+id/go_to_game_settings"
+    app:destination="@id/settings_fragment" />
+
+  <action
+    android:id="@+id/navigate_to_results"
+    app:destination="@id/results_fragment"/>
+
+  <action
+    android:id="@+id/navigate_to_game"
+    app:destination="@id/game_fragment"/>
+
+  <fragment
+    android:id="@+id/waiting_fragment"
+    android:label="New Game"
+    android:name="edu.cnm.deepdive.uno.controller.SettingsFragment"
+    tools:layout="@layout/fragment_loading"/>
+
+  <fragment
+    android:id="@+id/game_fragment"
+    android:label="@string/game_title"
+    android:name="edu.cnm.deepdive.uno.controller.GameFragment"
+    tools:layout="@layout/fragment_game"/>
+
+  <fragment
+    android:id="@+id/results_fragment"
+    android:label="@string/results_title"
+    android:name="edu.cnm.deepdive.uno.controller.ResultsFragment"
+    tools:layout="@layout/fragment_results"/>
+
+  <activity
+    android:id="@+id/settings_fragment"
+    android:label="@string/settings_title"
+    android:name="edu.cnm.deepdive.uno.controller.SettingsActivity"
+    tools:layout="@layout/activity_settings"/>
+
+  <activity
+    android:id="@+id/lobby_activity"
+    android:label="@string/lobby_title"
+    android:name="edu.cnm.deepdive.uno.controller.LobbyActivity"
+    tools:layout="@layout/activity_lobby"/>
+
+
+
+</navigation>
