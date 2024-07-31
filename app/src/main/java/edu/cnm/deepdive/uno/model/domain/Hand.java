@@ -2,7 +2,6 @@ package edu.cnm.deepdive.uno.model.domain;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import edu.cnm.deepdive.uno.model.entity.User;
 import java.util.LinkedList;
 import java.util.List;
 

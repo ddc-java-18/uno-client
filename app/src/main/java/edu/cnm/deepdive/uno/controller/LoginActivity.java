@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     viewModel
         .getAccount()
         .observe(this, this::handleAccount);
+
     viewModel
         .getThrowable()
         .observe(this, this::informFailure);
@@ -42,12 +43,11 @@ public class LoginActivity extends AppCompatActivity {
 
   private void handleAccount(GoogleSignInAccount account) {
     if (account != null) {
-
       Intent intent = new Intent(this, MainActivity.class)
           .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
       startActivity(intent);
     } else if (silent) {
-
+      // TODO: 7/30/24 Figure out what to do here. 
     }
   }
 

@@ -2,7 +2,6 @@ package edu.cnm.deepdive.uno.model.domain;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import edu.cnm.deepdive.uno.model.entity.User;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -179,6 +178,13 @@ public final class Game {
    */
   public List<Hand> getHands() {
     return hands;
+  }
+
+  public Card validateMove(Card card) {
+    // Check that it is the current players turn
+    // Check if card is in players hand
+    // Check that card meets playing conditions according to top discard card.
+    return card;
   }
 
   /**

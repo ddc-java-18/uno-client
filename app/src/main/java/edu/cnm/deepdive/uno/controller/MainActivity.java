@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     setupNavigation();
     setupViewModel();
   }
+
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     super.onCreateOptionsMenu(menu);
@@ -82,5 +83,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
           }
         });
+    loginViewModel.getUser();
   }
 }

@@ -11,7 +11,7 @@ public class Card {
 
   @Expose
   @SerializedName(value = "key", alternate = "id")
-  private final String id;
+  private String id;
 
   @Expose
   private final Suit suit;
@@ -50,6 +50,10 @@ public class Card {
    */
   public String getId() {
     return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
   }
 
   /**

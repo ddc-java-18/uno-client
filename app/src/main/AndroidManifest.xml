@@ -14,6 +14,7 @@
     android:roundIcon="@mipmap/uno_launcher_icon_round"
     android:supportsRtl="true"
     android:theme="@style/AppTheme"
+    android:usesCleartextTraffic="true"
     tools:ignore="AllowBackup,DataExtractionRules">
 
     <activity

@@ -84,4 +84,7 @@ public class LoginViewModel extends ViewModel implements DefaultLifecycleObserve
     DefaultLifecycleObserver.super.onStop(owner);
   }
 
+  public void getUser() {
+
+  }
 }
