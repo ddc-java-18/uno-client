@@ -6,18 +6,18 @@
   android:padding="8dp">
 
   <!--  TODO use an imageview instead of textview-->
-  <TextView
+  <ImageView
     android:id="@+id/card_rank"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:textSize="24sp"
-    android:layout_gravity="center" />
+    android:src=""
+    android:layout_gravity="center"/>
 
-  <TextView
+  <ImageView
     android:id="@+id/card_suit"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:textSize="24sp"
-    android:layout_gravity="center" />
+    android:src=""
+    android:layout_gravity="center"/>
 
 </LinearLayout>
