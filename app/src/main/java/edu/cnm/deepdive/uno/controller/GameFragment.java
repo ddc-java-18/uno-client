@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
+import edu.cnm.deepdive.uno.R;
 import edu.cnm.deepdive.uno.adapter.HandAdapter;
 import edu.cnm.deepdive.uno.databinding.FragmentGameBinding;
 import edu.cnm.deepdive.uno.model.domain.Card;
@@ -105,16 +106,31 @@ public class GameFragment extends Fragment {
   private void showHand() {
     if (game != null && user != null) {
       for (Hand hand : game.getHands()) {
-        // FIXME: 8/1/24 : select the hand based on the user's current key
         if (hand.getUser().getId().equals(user.getId())) {
           HandAdapter adapter =
-              new HandAdapter(requireContext(), hand.getCards(), rankDrawables, suitColors, (position, card) -> {
-                // TODO: 8/1/24 : do something with the clicked card!!
-                Log.d(TAG, "card in position " + position + " clicked" );
-              });
+              new HandAdapter(requireContext(), hand.getCards(), rankDrawables, suitColors,
+                  (position, card) -> {
+                    // TODO: 8/1/24 : do something with the clicked card!!
+                    Log.d(TAG, "card in position " + position + " clicked");
+                  });
           binding.recyclerViewHand.setAdapter(adapter);
           break;
         }
+      }
+    }
+  }
+
+  private void showTopDiscard() {
+    if (game != null) {
+      Card topDiscard = game.getTopDiscard();
+      if (topDiscard != null) {
+        int drawableId = rankDrawables.get(topDiscard.getRank());
+
+        binding.discardTopCard.setImageResource(drawableId);
+        binding.discardTopCard.setColorFilter(suitColors.get(topDiscard.getSuit()));
+      } else {
+
+        binding.discardTopCard.setImageResource(R.drawable.card_default);
       }
     }
   }
