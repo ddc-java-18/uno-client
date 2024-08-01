@@ -5,6 +5,7 @@
   android:orientation="vertical"
   android:padding="8dp">
 
+<!--  TODO use an imageview instead of textview-->
   <TextView
     android:id="@+id/card_rank"
     android:layout_width="wrap_content"
