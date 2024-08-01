@@ -1,7 +1,6 @@
 package edu.cnm.deepdive.uno.adapter;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
@@ -11,25 +10,24 @@ import edu.cnm.deepdive.uno.databinding.ItemCardBinding;
 import edu.cnm.deepdive.uno.model.domain.Card;
 import edu.cnm.deepdive.uno.model.domain.Card.Rank;
 import edu.cnm.deepdive.uno.model.domain.Card.Suit;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.zip.Inflater;
 
 public class HandAdapter extends RecyclerView.Adapter<ViewHolder> {
 
   private final List<Card> cardList;
-  private final Context context;
   private final LayoutInflater layoutInflater;
-  private final Resources resources;
-  private final Map<RankSuitCombo, Integer> cardGraphics;
+  private final Map<Rank, Integer> rankDrawables;
+  private final Map<Suit, Integer> suitColors;
+  private final OnCardClickListener onCardClickListener;
 
-  public HandAdapter(List<Card> cardList, Context context) {
+  public HandAdapter(Context context, List<Card> cardList, Map<Rank, Integer> rankDrawables,
+      Map<Suit, Integer> suitColors, OnCardClickListener onCardClickListener) {
     this.cardList = cardList;
-    this.context = context;
     layoutInflater = LayoutInflater.from(context);
-    resources = context.getResources();
-    cardGraphics = getCardGraphics();
+    this.rankDrawables = rankDrawables;
+    this.suitColors = suitColors;
+    this.onCardClickListener = onCardClickListener;
   }
 
   @NonNull
@@ -49,24 +47,6 @@ public class HandAdapter extends RecyclerView.Adapter<ViewHolder> {
     return cardList.size();
   }
 
-  private Map<RankSuitCombo, Integer> getCardGraphics() {
-    Map<RankSuitCombo, Integer> cardGraphics = new HashMap<>();
-    for (Rank rank : Rank.values()) {
-      if (rank.isSuited()) {
-        for (Suit suit : Suit.values()) {
-          int id = resources.getIdentifier("card_" + rank.name().toLowerCase() + "_" + suit.name().toLowerCase(), "drawable",
-              context.getPackageName());
-          cardGraphics.put(new RankSuitCombo(rank, suit), id);
-        }
-      } else {
-        int id = resources.getIdentifier("card_" + rank.name().toLowerCase(), "drawable",
-            context.getPackageName());
-        cardGraphics.put(new RankSuitCombo(rank, null), id);
-      }
-    }
-    return cardGraphics;
-  }
-
   private class Holder extends RecyclerView.ViewHolder {
 
     private final ItemCardBinding binding;
@@ -78,13 +58,23 @@ public class HandAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     public void bind(int position, Card card) {
       //noinspection DataFlowIssue
-      int drawableId = cardGraphics.get(new RankSuitCombo(card.getRank(), card.getSuit()));
-//      binding.image.setImageResource(drawbleId);
-      // TODO: 7/31/24 : Set content description with name of rank and name of suit.
-      binding.cardRank.setText(card.getRank().toString());
-      binding.cardSuit.setText(card.getSuit().toString());
+      int drawableId = rankDrawables.get(card.getRank());
+
+      binding.cardImage.setImageResource(drawableId);
+
+      //noinspection DataFlowIssue
+      binding.cardImage.setColorFilter(suitColors.get(card.getSuit()));
+
+      binding.cardImage.setContentDescription(
+          card.getRank().toString() + " of " + card.getSuit().toString());
+      binding.getRoot().setOnClickListener((v) -> onCardClickListener.onCardClick(position, card));
     }
   }
-}
 
+  @FunctionalInterface
+  public interface OnCardClickListener {
+
+    void onCardClick(int position, Card card);
+  }
+}
 
