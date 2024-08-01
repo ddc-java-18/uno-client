@@ -85,8 +85,6 @@ public class HandAdapter extends RecyclerView.Adapter<ViewHolder> {
       binding.cardRank.setText(card.getRank().toString());
       binding.cardSuit.setText(card.getSuit().toString());
     }
-
-
   }
 }
 
