@@ -23,6 +23,9 @@ public final class Game {
   private final Date endTime;
 
   @Expose(serialize = false)
+  private final Date lastUpdatedOn;
+
+  @Expose(serialize = false)
   private final boolean gameCompleted;
 
   @Expose(serialize = false)
@@ -63,6 +66,7 @@ public final class Game {
     id = null;
     startTime = null;
     endTime = null;
+    lastUpdatedOn = null;
     gameCompleted = false;
     rotationOrder = false;
     winner = null;
@@ -97,6 +101,10 @@ public final class Game {
    */
   public Date getEndTime() {
     return endTime;
+  }
+
+  public Date getLastUpdatedOn() {
+    return lastUpdatedOn;
   }
 
   /**

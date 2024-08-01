@@ -49,17 +49,20 @@ public class GameFragment extends Fragment {
 
     gameViewModel.getGame()
         .observe(lifecycleOwner, (game) -> {
-          // TODO: 7/30/24   update display based on game
           if (game != null) {
             this.game = game;
+            // TODO: 7/30/24   update display based on game
           }
         });
 
     userViewModel = new ViewModelProvider(context).get(UserViewModel.class);
-
+    getLifecycle().addObserver(userViewModel);
     userViewModel.getUser()
         .observe(lifecycleOwner, (user) -> {
-          this.user = user;
+          if (user != null) {
+            this.user = user;
+            gameViewModel.pollForUpdates();
+          }
         });
 
     binding.createGameBtn.setOnClickListener((v) -> gameViewModel.createGame());

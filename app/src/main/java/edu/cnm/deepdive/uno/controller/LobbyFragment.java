@@ -25,8 +25,6 @@ public class LobbyFragment extends Fragment {
       @Nullable Bundle savedInstanceState) {
     binding = FragmentLobbyBinding.inflate(inflater, container, false);
     binding.startGameBtn.setOnClickListener((v) -> {
-      // TODO: 7/31/24 Add logic to create a game and then navigate to the GameActivity
-      //  when game creation response is received.
       gameViewModel.createGame();
     });
 
