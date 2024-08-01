@@ -77,7 +77,23 @@ public class GameViewModel extends ViewModel implements DefaultLifecycleObserver
     Game game = this.game.getValue();
     gameService.submitMove(game, card, user)
         .subscribe(
-            this.game::postValue,
+            (g) -> {
+             this.game.postValue(g);
+             pollForUpdates();
+            },
+            this::postThrowable,
+            pending
+        );
+  }
+
+  public void drawCard() {
+    Game game = this.game.getValue();
+    gameService.drawCard(game)
+        .subscribe(
+            (g) -> {
+              this.game.postValue(g);
+              pollForUpdates();
+            },
             this::postThrowable,
             pending
         );

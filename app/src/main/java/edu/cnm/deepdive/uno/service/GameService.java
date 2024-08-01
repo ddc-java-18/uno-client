@@ -51,7 +51,12 @@ public class GameService {
   }
 
   public Single<Game> drawCard(Game game) {
-    throw new UnsupportedOperationException();
+    // TODO: 8/1/24 Make sure that the user is allowed to draw. 
+    return Single.fromSupplier(() -> game)
+        .flatMap((g) -> signInService
+            .refreshToken()
+            .flatMap((token) -> proxy.drawCard(game.getId(), token)))
+        .subscribeOn(scheduler);
   }
 
   public Single<Game> getGame(Game game) {

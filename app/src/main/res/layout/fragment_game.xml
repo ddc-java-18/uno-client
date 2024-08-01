@@ -46,8 +46,19 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintTop_toBottomOf="@id/start_game_btn"
-    app:layout_constraintBottom_toBottomOf="@id/get_game_btn"
+    app:layout_constraintBottom_toTopOf="@id/draw_card_btn"
     android:text="make move"
+    />
+
+  <Button
+    android:id="@+id/draw_card_btn"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/submit_move_btn"
+    app:layout_constraintBottom_toTopOf="@id/discard_top_card"
+    android:text="draw card"
     />
 
   <ImageView

@@ -62,11 +62,14 @@ public class HandAdapter extends RecyclerView.Adapter<ViewHolder> {
 
       binding.cardImage.setImageResource(drawableId);
 
-      //noinspection DataFlowIssue
-      binding.cardImage.setColorFilter(suitColors.get(card.getSuit()));
+      if (card.getSuit() != null) {
+        binding.cardImage.setColorFilter(suitColors.get(card.getSuit()));
+      }
 
-      binding.cardImage.setContentDescription(
-          card.getRank().toString() + " of " + card.getSuit().toString());
+      String description =  card.getRank().toString() + " of ";
+      description += (card.getSuit() != null) ? card.getSuit().toString() : "WILD";
+
+      binding.cardImage.setContentDescription(description);
       binding.getRoot().setOnClickListener((v) -> onCardClickListener.onCardClick(position, card));
     }
   }

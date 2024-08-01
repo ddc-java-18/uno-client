@@ -50,6 +50,7 @@ public class GameFragment extends Fragment {
 
   private Game game;
   private User user;
+  private Card selectedCard;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,12 +97,13 @@ public class GameFragment extends Fragment {
     binding.createGameBtn.setOnClickListener((v) -> gameViewModel.createGame());
     binding.getGameBtn.setOnClickListener((v) -> gameViewModel.getGame());
     binding.startGameBtn.setOnClickListener((v) -> gameViewModel.startGame());
+    binding.drawCardBtn.setOnClickListener((v) -> gameViewModel.drawCard());
     binding.submitMoveBtn.setOnClickListener(
         (v) -> {
-          // TODO: 7/31/24 Get the card the user has selected.
-          Card testCard = new Card(Suit.BLUE, Rank.EIGHT);
-          testCard.setId("3494ab0e-1f03-4b33-bd54-e5e06dac61e1");
-          gameViewModel.makeMove(testCard, user);
+//          // TODO: 7/31/24 Get the card the user has selected.
+//          Card testCard = new Card(Suit.BLUE, Rank.EIGHT);
+//          testCard.setId("3494ab0e-1f03-4b33-bd54-e5e06dac61e1");
+          gameViewModel.makeMove(selectedCard, user);
         }
     );
 
@@ -114,8 +116,9 @@ public class GameFragment extends Fragment {
           HandAdapter adapter =
               new HandAdapter(requireContext(), hand.getCards(), rankDrawables, suitColors,
                   (position, card) -> {
+                    this.selectedCard = card;
                     // TODO: 8/1/24 : do something with the clicked card!!
-                    Log.d(TAG, "card in position " + position + " clicked");
+                    Log.d(TAG, "Psition: " + position + ", Rank: " + card.getRank() + ", Suit: " + card.getSuit());
                   });
           binding.recyclerViewHand.setAdapter(adapter);
           break;
@@ -133,7 +136,6 @@ public class GameFragment extends Fragment {
         binding.discardTopCard.setImageResource(drawableId);
         binding.discardTopCard.setColorFilter(suitColors.get(topDiscard.getSuit()));
       } else {
-
         binding.discardTopCard.setImageResource(R.drawable.card_default);
       }
     }
