@@ -13,12 +13,14 @@ import javax.inject.Singleton;
 public class GameService {
 
   private final UnoServiceProxy proxy;
+  private final UnoServiceLongProxy longProxy;
   private final GoogleSignInService signInService;
   private final Scheduler scheduler;
 
   @Inject
-  public GameService(UnoServiceProxy proxy, GoogleSignInService signInService) {
+  public GameService(UnoServiceProxy proxy, UnoServiceLongProxy longProxy, GoogleSignInService signInService) {
     this.proxy = proxy;
+    this.longProxy = longProxy;
     this.signInService = signInService;
     this.scheduler = Schedulers.single();
   }
@@ -61,7 +63,7 @@ public class GameService {
 
   public Single<Game> getGame(Game game) {
     return signInService.refreshToken()
-        .flatMap((token) -> proxy.getGame(game.getId(), token))
+        .flatMap((token) -> longProxy.getGame(game.getId(), token))
         .subscribeOn(scheduler);
   }
 
