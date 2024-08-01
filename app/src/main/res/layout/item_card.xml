@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.carousel.MaskableFrameLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="match_parent"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:foreground="?attr/selectableItemBackground"
+  app:shapeAppearance="?attr/shapeAppearanceCornerSmall"
+  android:layout_margin="@dimen/half_static_spacing">
+
+  <ImageView
+    android:id="@+id/card_image"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:scaleType="fitCenter"
+    android:adjustViewBounds="true"
+    android:contentDescription="@string/card_image_description"
+    tools:src="@drawable/card_wild"/>
+
+
+</com.google.android.material.carousel.MaskableFrameLayout>

@@ -14,31 +14,39 @@
     android:src="@drawable/uno_logo_large"
     android:layout_margin="@dimen/half_static_spacing"
     app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintBottom_toBottomOf="@id/start_game_btn"
+    app:layout_constraintBottom_toTopOf="@id/start_and_settings_btns"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"/>
 
-  <Button
-    android:id="@+id/start_game_btn"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/half_dynamic_spacing"
+  <LinearLayout
+    android:id="@+id/start_and_settings_btns"
+    android:layout_width="match_parent"
+    android:layout_height="144dp"
+    android:orientation="vertical"
     app:layout_constraintTop_toBottomOf="@id/uno_landing_logo"
-    app:layout_constraintBottom_toTopOf="@id/navigate_to_settings"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    android:text="@string/new_game"/>
-
-  <Button
-    android:id="@+id/navigate_to_settings"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/half_dynamic_spacing"
-    app:layout_constraintTop_toBottomOf="@id/start_game_btn"
     app:layout_constraintBottom_toTopOf="@id/landing_page_title"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    android:text="@string/game_settings"/>
+    app:layout_constraintEnd_toEndOf="parent">
+
+    <Button
+      android:id="@+id/start_game_btn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textAlignment="center"
+      android:layout_gravity="center"
+      android:layout_margin="@dimen/half_dynamic_spacing"
+      android:text="@string/new_game"/>
+
+    <Button
+      android:id="@+id/game_settings_btn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textAlignment="center"
+      android:layout_gravity="center"
+      android:layout_margin="@dimen/half_dynamic_spacing"
+      android:text="@string/game_settings"/>
+
+  </LinearLayout>
 
   <TextView
     android:id="@+id/landing_page_title"
@@ -47,10 +55,11 @@
     android:layout_margin="@dimen/full_dynamic_spacing"
     android:text="@string/developer_credit"
     android:textAlignment="center"
-    app:layout_constraintTop_toBottomOf="@id/start_game_btn"
+    app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"/>
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintVertical_bias="1.0"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,8 +15,7 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintBottom_toTopOf="@id/get_game_btn"
-    android:text="create_game"
-    />
+    android:text="create_game"/>
 
   <Button
     android:id="@+id/get_game_btn"
@@ -51,5 +50,27 @@
     android:text="make move"
     />
 
+  <ImageView
+    android:id="@+id/discard_top_card"
+    android:layout_width="270dp"
+    android:layout_height="270dp"
+    android:layout_margin="@dimen/half_static_spacing"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toTopOf="@id/recycler_view_hand"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"/>
+
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/recycler_view_hand"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    app:layoutManager="com.google.android.material.carousel.CarouselLayoutManager"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintVertical_bias="1.0"
+    app:layout_constraintHeight_percent="0.25"
+    tools:listitem="@layout/item_card"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
