@@ -1,27 +1,27 @@
 package edu.cnm.deepdive.uno.controller;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import dagger.hilt.android.AndroidEntryPoint;
 import edu.cnm.deepdive.uno.R;
 import edu.cnm.deepdive.uno.databinding.ActivityMainBinding;
+import edu.cnm.deepdive.uno.viewmodel.GameViewModel;
 import edu.cnm.deepdive.uno.viewmodel.LoginViewModel;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
   private ActivityMainBinding binding;
-  private NavController navController;
   private LoginViewModel loginViewModel;
+  private GameViewModel gameViewModel;
+  private NavController navController;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
   @Override
   public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-    super.onOptionsItemSelected(item);
     boolean handled = true;
     if (item.getItemId() == R.id.settings) {
       Intent intent = new Intent(this, SettingsActivity.class);
@@ -51,13 +50,12 @@ public class MainActivity extends AppCompatActivity {
     } else {
       handled = super.onOptionsItemSelected(item);
     }
-
     return handled;
   }
 
   @Override
   public boolean onSupportNavigateUp() {
-    return super.onSupportNavigateUp() || super.onSupportNavigateUp();
+    return navController.navigateUp() || super.onSupportNavigateUp();
   }
 
   private void setupNavigation() {
@@ -65,15 +63,11 @@ public class MainActivity extends AppCompatActivity {
     navController = ((NavHostFragment) getSupportFragmentManager()
         .findFragmentById(R.id.nav_host_fragment))
         .getNavController();
-    AppBarConfiguration appBarConfig = new AppBarConfiguration.Builder(
-        R.id.landing_fragment, R.id.game_fragment, R.id.results_fragment)
-        .build();
-    NavigationUI.setupActionBarWithNavController(this, navController, appBarConfig);
-    NavigationUI.setupWithNavController(binding.navigator, navController);
   }
 
   private void setupViewModel () {
-    loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+    ViewModelProvider provider = new ViewModelProvider(this);
+    loginViewModel = provider.get(LoginViewModel.class);
     loginViewModel.getAccount()
         .observe(this, (account) -> {
           if (account == null) {
@@ -82,6 +76,5 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
           }
         });
-    loginViewModel.getUser();
   }
 }

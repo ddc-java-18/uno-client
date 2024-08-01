@@ -1,17 +1,15 @@
 package edu.cnm.deepdive.uno.controller;
 
 import android.os.Bundle;
-import android.util.Log;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
-import edu.cnm.deepdive.uno.R;
 import edu.cnm.deepdive.uno.databinding.FragmentGameBinding;
 import edu.cnm.deepdive.uno.model.domain.Card;
 import edu.cnm.deepdive.uno.model.domain.Card.Rank;
@@ -36,7 +34,6 @@ public class GameFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
     binding = FragmentGameBinding.inflate(inflater, container, false);
     return binding.getRoot();
   }
@@ -59,7 +56,7 @@ public class GameFragment extends Fragment {
         });
 
     userViewModel = new ViewModelProvider(context).get(UserViewModel.class);
-    getLifecycle().addObserver(userViewModel);
+
     userViewModel.getUser()
         .observe(lifecycleOwner, (user) -> {
           this.user = user;
