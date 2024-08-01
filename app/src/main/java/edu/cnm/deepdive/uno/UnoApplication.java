@@ -51,7 +51,6 @@ public class UnoApplication extends Application implements OnSharedPreferenceCha
     prefs.registerOnSharedPreferenceChangeListener(this);
 
     updateDarkMode(prefs);
-
   }
 
   @Override
