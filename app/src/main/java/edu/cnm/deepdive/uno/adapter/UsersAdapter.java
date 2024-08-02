@@ -23,8 +23,8 @@ public class UsersAdapter extends RecyclerView.Adapter<ViewHolder> {
   @NonNull
   @Override
   public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-    ItemUserBinding binding = ItemUserBinding.inflate(layoutInflater, parent, false);
-    return new UserViewHolder(binding);
+//    ItemUserBinding binding = ;
+    return new UserViewHolder(ItemUserBinding.inflate(layoutInflater, parent, false));
   }
 
   @Override
@@ -39,6 +39,7 @@ public class UsersAdapter extends RecyclerView.Adapter<ViewHolder> {
   }
 
   private class UserViewHolder extends RecyclerView.ViewHolder {
+
     private final ItemUserBinding binding;
 
     public UserViewHolder(ItemUserBinding binding) {

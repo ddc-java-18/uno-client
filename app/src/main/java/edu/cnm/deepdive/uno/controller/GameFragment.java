@@ -171,7 +171,10 @@ public class GameFragment extends Fragment {
         int drawableId = rankDrawables.get(topDiscard.getRank());
 
         binding.discardTopCard.setImageResource(drawableId);
-        binding.discardTopCard.setColorFilter(suitColors.get(topDiscard.getSuit()));
+        // If top discard card is will we get a null pointer error.
+        if (topDiscard.getSuit() != null) {
+          binding.discardTopCard.setColorFilter(suitColors.get(topDiscard.getSuit()));
+        }
       } else {
         binding.discardTopCard.setImageResource(R.drawable.card_default);
       }
