@@ -79,6 +79,7 @@ public class GameFragment extends Fragment {
           if (game != null) {
             this.game = game;
             showHand();
+            showTopDiscard();
           }
         });
 
