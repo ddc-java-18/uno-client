@@ -18,6 +18,15 @@
 
   <color name="primary_color">#FFD22B2B</color>
   <color name="primary_color_dark">#FF880808</color>
-  <color name="accent_color">#FF17202A</color>
+  <color name="accent_color">#FF505255</color>
+
+  <color name="success_green">#5cb85c</color>
+  <color name="error_red">#FF3333</color>
+
+  <color name="card_red">#FFE73636</color>
+  <color name="card_yellow">#FFE7CB36</color>
+  <color name="card_blue">#FF367DE7</color>
+  <color name="card_green">#FF119F63</color>
+
 
 </resources>

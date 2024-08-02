@@ -2,7 +2,6 @@ package edu.cnm.deepdive.uno.service;
 
 import edu.cnm.deepdive.uno.model.domain.Card;
 import edu.cnm.deepdive.uno.model.domain.Game;
-import edu.cnm.deepdive.uno.model.domain.User;
 import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -13,12 +12,14 @@ import javax.inject.Singleton;
 public class GameService {
 
   private final UnoServiceProxy proxy;
+  private final UnoServiceLongProxy longProxy;
   private final GoogleSignInService signInService;
   private final Scheduler scheduler;
 
   @Inject
-  public GameService(UnoServiceProxy proxy, GoogleSignInService signInService) {
+  public GameService(UnoServiceProxy proxy, UnoServiceLongProxy longProxy, GoogleSignInService signInService) {
     this.proxy = proxy;
+    this.longProxy = longProxy;
     this.signInService = signInService;
     this.scheduler = Schedulers.single();
   }
@@ -39,24 +40,26 @@ public class GameService {
         .subscribeOn(scheduler);
   }
 
-  public Single<Game> submitMove(Game game, Card card, User user) {
-    // 1. I need to get the current user/player
-    // 2. I need to validate that the card submitted by the player is valid
-    // 3. Get the users bearer token
-    return Single.fromSupplier(() -> game.validateMove(card))
-        .flatMap((validCard) -> signInService
+  public Single<Game> submitMove(Game game, Card card) {
+    return Single.fromSupplier(() -> card)
+        .flatMap((c) -> signInService
             .refreshToken()
-            .flatMap((token) -> proxy.submitMove(game.getId(), token, validCard)))
+            .flatMap((token) -> proxy.submitMove(game.getId(), token, c)))
         .subscribeOn(scheduler);
   }
 
   public Single<Game> drawCard(Game game) {
-    throw new UnsupportedOperationException();
+    // TODO: 8/1/24 Make sure that the user is allowed to draw. 
+    return Single.fromSupplier(() -> game)
+        .flatMap((g) -> signInService
+            .refreshToken()
+            .flatMap((token) -> proxy.drawCard(game.getId(), token)))
+        .subscribeOn(scheduler);
   }
 
   public Single<Game> getGame(Game game) {
     return signInService.refreshToken()
-        .flatMap((token) -> proxy.getGame(game.getId(), token))
+        .flatMap((token) -> longProxy.getGame(game.getId(), token))
         .subscribeOn(scheduler);
   }
 

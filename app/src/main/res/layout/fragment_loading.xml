@@ -9,12 +9,13 @@
 
   <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/current_players_in_game"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintBottom_toTopOf="@id/start_a_new_game_once_full"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"/>
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHeight_percent="0.40"/>
 
   <Button
     android:id="@+id/start_a_new_game_once_full"
@@ -29,8 +30,8 @@
 
   <ImageView
     android:id="@+id/uno_landing_logo"
-    android:layout_width="225dp"
-    android:layout_height="225dp"
+    android:layout_width="240dp"
+    android:layout_height="240dp"
     android:src="@drawable/uno_logo_large"
     android:layout_margin="@dimen/half_static_spacing"
     app:layout_constraintTop_toBottomOf="@id/start_a_new_game_once_full"

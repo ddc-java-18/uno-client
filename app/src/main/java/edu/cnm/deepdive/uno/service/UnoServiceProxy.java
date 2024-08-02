@@ -68,16 +68,6 @@ public interface UnoServiceProxy {
   Single<Game> drawCard(@Path("gameKey") String gameKey,
       @Header("Authorization") String bearerToken);
 
-  /**
-   * Gets the Game from the UNO web service associated with the provided external gameKey.
-   *
-   * @param gameKey the external key associated with the game being retrieved.
-   * @return a {@code Single<Game>} which emits the Game associated with the external gameKey.
-   */
-  @GET("games/{gameKey}")
-  Single<Game> getGame(@Path("gameKey") String gameKey,
-      @Header("Authorization") String bearerToken);
-
   @GET("users/me")
   Single<User> getCurrentUser(@Header("Authorization") String bearerToken);
 

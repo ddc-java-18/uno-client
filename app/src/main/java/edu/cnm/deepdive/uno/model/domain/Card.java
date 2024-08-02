@@ -28,6 +28,9 @@ public class Card {
   @Expose(serialize = false)
   private final int position;
 
+  @Expose(serialize = false, deserialize = false)
+  private boolean selectedByUser;
+
   /**
    * Constructs an UNO Card with the specified Suit and Rank.
    *
@@ -101,14 +104,43 @@ public class Card {
     return position;
   }
 
+  public boolean isSelectedByUser() {
+    return selectedByUser;
+  }
+
+  public void setSelectedByUser(boolean selectedByUser) {
+    this.selectedByUser = selectedByUser;
+  }
+
   /**
    * An Enumeration containing all the possible Ranks (face values) an UNO card can have in a game
    * of UNO.
    */
   public enum Rank {
-    ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX,
-    SEVEN, EIGHT, NINE, SKIP, REVERSE, DRAW_TWO,
-    DRAW_FOUR, WILD;
+    ZERO(true),
+    ONE(true),
+    TWO(true),
+    THREE(true),
+    FOUR(true),
+    FIVE(true),
+    SIX(true),
+    SEVEN(true),
+    EIGHT(true),
+    NINE(true),
+    SKIP(true),
+    REVERSE(true),
+    DRAW_TWO(true);
+//    DRAW_FOUR(false),
+//    WILD(false);
+
+    private final boolean suited;
+
+    Rank(boolean suited) {
+      this.suited = suited;
+    }
+    public boolean isSuited() {
+      return suited;
+    }
   }
 
   /**
@@ -121,3 +153,4 @@ public class Card {
     GREEN
   }
 }
+

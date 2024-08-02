@@ -9,7 +9,9 @@ import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
 import edu.cnm.deepdive.uno.R;
+import edu.cnm.deepdive.uno.service.UnoServiceLongProxy;
 import edu.cnm.deepdive.uno.service.UnoServiceProxy;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Singleton;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -64,5 +66,35 @@ public class UnoServiceModule {
 
     return retrofit.create(UnoServiceProxy.class);
   }
+
+  @Provides
+  @Singleton
+  public UnoServiceLongProxy provideLongProxy(@ApplicationContext Context context) {
+    Gson gson = new GsonBuilder()
+        .excludeFieldsWithoutExposeAnnotation()
+        .create();
+    String loggingLevelProperty = context.getString(R.string.logging_level).toUpperCase();
+    Level loggingLevel = Level.valueOf(loggingLevelProperty);
+    HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+    logging.setLevel(loggingLevel);
+
+    OkHttpClient client = new OkHttpClient.Builder()
+        .addInterceptor(logging)
+        .connectTimeout(0, TimeUnit.SECONDS)
+        .writeTimeout(0, TimeUnit.SECONDS)
+        .readTimeout(0, TimeUnit.SECONDS)
+        .callTimeout(15, TimeUnit.SECONDS)
+        .build();
+
+    Retrofit retrofit = new Retrofit.Builder()
+        .client(client)
+        .baseUrl(context.getString(R.string.base_url))
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+        .build();
+
+    return retrofit.create(UnoServiceLongProxy.class);
+  }
+
 
 }
