@@ -130,7 +130,7 @@ public class GameFragment extends Fragment {
         binding.discardTopCard.setColorFilter(suitColors.get(topDiscard.getSuit()));
       } else {
 
-        binding.discardTopCard.setImageResource(R.drawable.card_default);
+        binding.discardTopCard.setImageResource(R.drawable.card_draw_four);
       }
     }
   }
