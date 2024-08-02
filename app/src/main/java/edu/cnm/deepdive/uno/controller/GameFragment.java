@@ -43,7 +43,6 @@ public class GameFragment extends Fragment {
   private UserViewModel userViewModel;
   private LoginViewModel loginViewModel;
   private FragmentGameBinding binding;
-
   private RecyclerView recyclerView;
   private Map<Rank, Integer> rankDrawables;
   private Map<Suit, Integer> suitColors;
@@ -118,7 +117,7 @@ public class GameFragment extends Fragment {
                   (position, card) -> {
                     this.selectedCard = card;
                     // TODO: 8/1/24 : do something with the clicked card!!
-                    Log.d(TAG, "Psition: " + position + ", Rank: " + card.getRank() + ", Suit: " + card.getSuit());
+                    Log.d(TAG, "Position: " + position + ", Rank: " + card.getRank() + ", Suit: " + card.getSuit());
                   });
           binding.recyclerViewHand.setAdapter(adapter);
           break;
