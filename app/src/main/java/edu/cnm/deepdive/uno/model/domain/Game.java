@@ -2,6 +2,7 @@ package edu.cnm.deepdive.uno.model.domain;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import edu.cnm.deepdive.uno.model.domain.Card.Rank;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -51,8 +52,6 @@ public final class Game {
 
   @Expose(serialize = false)
   private final List<Hand> hands;
-
-  // TODO: 7/29/24 Might need to add method to get the current players hand List<Card> cards.
 
   /**
    * Constructs an UNO game using the specified min and max number of players.
@@ -188,11 +187,56 @@ public final class Game {
     return hands;
   }
 
-  public Card validateMove(Card card) {
-    // Check that it is the current players turn
+  /**
+   * Helper function to validate if a card that a player submits as their move is valid or not.
+   *
+   * @param card submitted by user as their move.
+   * @param user who is submitting a card as their move.
+   * @return
+   */
+  public MoveState validateMove(Card card, User user) {
+    MoveState state = MoveState.INVALID_MOVE;
+    Hand userHand = null;
+    // Checks that it is the current player's turn
+    boolean isPlayersTurn = false;
+    for (Hand hand : hands) {
+      if (hand.getUser().getId().equals(user.getId())) {
+        isPlayersTurn = hand.isTurn();
+        userHand = hand;
+      }
+    }
+    if (!isPlayersTurn) {
+      return MoveState.OUT_OF_TURN;
+    }
+
     // Check if card is in players hand
-    // Check that card meets playing conditions according to top discard card.
-    return card;
+    boolean cardInHand = false;
+    for (Card c : userHand.getCards()) {
+      if (c.getId().equals(card.getId())) {
+        cardInHand = true;
+        break;
+      }
+    }
+    if (!cardInHand) {
+      return MoveState.INVALID_CARD;
+    }
+
+    // Check that the card submitted meets playing conditions according to top discard card.
+    boolean isValidMove = false;
+    Card topDiscardCard = this.topDiscard;
+    if (topDiscardCard != null) {
+      if (card.getRank() == Rank.WILD || card.getRank() == Rank.DRAW_FOUR) {
+        isValidMove = true;
+      } else if (topDiscardCard.getSuit() == card.getSuit()
+          || topDiscardCard.getRank() == card.getRank()) {
+        isValidMove = true;
+      }
+    }
+    if(!isValidMove) {
+      return MoveState.INVALID_MOVE;
+    }
+
+    return MoveState.VALID;
   }
 
   /**
@@ -201,5 +245,12 @@ public final class Game {
    */
   public enum GameState {
     CREATED, IN_PROGRESS, COMPLETED
+  }
+
+  /**
+   * Enumeration representing whether a move submitted is valid or not.
+   */
+  public enum MoveState {
+    OUT_OF_TURN, INVALID_CARD, INVALID_MOVE, VALID
   }
 }

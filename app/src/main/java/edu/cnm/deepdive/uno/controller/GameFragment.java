@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.snackbar.Snackbar;
 import edu.cnm.deepdive.uno.R;
 import edu.cnm.deepdive.uno.adapter.HandAdapter;
 import edu.cnm.deepdive.uno.databinding.FragmentGameBinding;
@@ -23,6 +24,7 @@ import edu.cnm.deepdive.uno.model.domain.Card;
 import edu.cnm.deepdive.uno.model.domain.Card.Rank;
 import edu.cnm.deepdive.uno.model.domain.Card.Suit;
 import edu.cnm.deepdive.uno.model.domain.Game;
+import edu.cnm.deepdive.uno.model.domain.Game.MoveState;
 import edu.cnm.deepdive.uno.model.domain.Hand;
 import edu.cnm.deepdive.uno.model.domain.User;
 import edu.cnm.deepdive.uno.viewmodel.GameViewModel;
@@ -98,15 +100,30 @@ public class GameFragment extends Fragment {
     binding.getGameBtn.setOnClickListener((v) -> gameViewModel.getGame());
     binding.startGameBtn.setOnClickListener((v) -> gameViewModel.startGame());
     binding.drawCardBtn.setOnClickListener((v) -> gameViewModel.drawCard());
-    binding.submitMoveBtn.setOnClickListener(
-        (v) -> {
-//          // TODO: 7/31/24 Get the card the user has selected.
-//          Card testCard = new Card(Suit.BLUE, Rank.EIGHT);
-//          testCard.setId("3494ab0e-1f03-4b33-bd54-e5e06dac61e1");
-          gameViewModel.makeMove(selectedCard, user);
-        }
-    );
+    binding.submitMoveBtn.setOnClickListener((v) -> submitMove(view));
 
+  }
+
+  private void submitMove(View view) {
+    MoveState moveState = game.validateMove(selectedCard, user);
+    String message = switch (moveState) {
+      case VALID -> "Your move has been submitted.";
+      case OUT_OF_TURN -> "Invalid Move: It is not your turn.";
+      case INVALID_MOVE -> "Invalid Move: The card you tried to submit isn't allowed.";
+      case INVALID_CARD ->
+          "Invalid Move: You are trying to submit a card that is not in your hand.";
+    };
+    if (moveState == MoveState.VALID) {
+      gameViewModel.makeMove(selectedCard);
+      // TODO: 8/2/24 Toast should only display if the move is actually submitted successfully on the serverside.
+      Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+          .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.success_green))
+          .show();
+    } else {
+      Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+          .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.error_red))
+          .show();
+    }
   }
 
   private void showHand() {
@@ -117,8 +134,8 @@ public class GameFragment extends Fragment {
               new HandAdapter(requireContext(), hand.getCards(), rankDrawables, suitColors,
                   (position, card) -> {
                     this.selectedCard = card;
-                    // TODO: 8/1/24 : do something with the clicked card!!
-                    Log.d(TAG, "Psition: " + position + ", Rank: " + card.getRank() + ", Suit: " + card.getSuit());
+                    Log.d(TAG, "Position: " + position + ", Rank: " + card.getRank() + ", Suit: "
+                        + card.getSuit());
                   });
           binding.recyclerViewHand.setAdapter(adapter);
           break;

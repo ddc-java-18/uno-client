@@ -2,7 +2,6 @@ package edu.cnm.deepdive.uno.service;
 
 import edu.cnm.deepdive.uno.model.domain.Card;
 import edu.cnm.deepdive.uno.model.domain.Game;
-import edu.cnm.deepdive.uno.model.domain.User;
 import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -41,14 +40,11 @@ public class GameService {
         .subscribeOn(scheduler);
   }
 
-  public Single<Game> submitMove(Game game, Card card, User user) {
-    // 1. I need to get the current user/player
-    // 2. I need to validate that the card submitted by the player is valid
-    // 3. Get the users bearer token
-    return Single.fromSupplier(() -> game.validateMove(card))
-        .flatMap((validCard) -> signInService
+  public Single<Game> submitMove(Game game, Card card) {
+    return Single.fromSupplier(() -> card)
+        .flatMap((c) -> signInService
             .refreshToken()
-            .flatMap((token) -> proxy.submitMove(game.getId(), token, validCard)))
+            .flatMap((token) -> proxy.submitMove(game.getId(), token, c)))
         .subscribeOn(scheduler);
   }
 
