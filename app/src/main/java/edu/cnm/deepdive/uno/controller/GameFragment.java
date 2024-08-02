@@ -56,6 +56,7 @@ public class GameFragment extends Fragment {
   private Game game;
   private User user;
   private Card selectedCard;
+  private HandAdapter adapter;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,6 +99,18 @@ public class GameFragment extends Fragment {
             this.user = user;
             gameViewModel.pollForUpdates();
             showHand();
+            gameViewModel.setSelectedCard(null);
+          }
+        });
+
+    gameViewModel
+        .getSelectedCard()
+        .observe(lifecycleOwner, (card) -> {
+          this.selectedCard = card;
+          if (card != null) {
+            // TODO: 8/2/24 Enable control to play selected card.
+          } else {
+            // TODO: 8/2/24 Disable controls to play selected card.
           }
         });
 
@@ -135,14 +148,18 @@ public class GameFragment extends Fragment {
     if (game != null && user != null) {
       for (Hand hand : game.getHands()) {
         if (hand.getUser().getId().equals(user.getId())) {
-          HandAdapter adapter =
-              new HandAdapter(requireContext(), hand.getCards(), rankDrawables, suitColors,
-                  (position, card) -> {
-                    this.selectedCard = card;
-                    // TODO: 8/1/24 : do something with the clicked card!!
-                    Log.d(TAG, "Position: " + position + ", Rank: " + card.getRank() + ", Suit: "
-                        + card.getSuit());
-                  });
+          adapter = new HandAdapter(requireContext(), hand.getCards(), rankDrawables, suitColors,
+              (position, card) -> {
+                if (selectedCard != null) {
+                  selectedCard.setSelectedByUser(false);
+                }
+                card.setSelectedByUser(true);
+//                    selectedCard = card;
+                gameViewModel.setSelectedCard(card);
+                adapter.notifyDataSetChanged();
+                Log.d(TAG, "Position: " + position + ", Rank: " + card.getRank() + ", Suit: "
+                    + card.getSuit());
+              });
           binding.recyclerViewHand.setAdapter(adapter);
           break;
         }

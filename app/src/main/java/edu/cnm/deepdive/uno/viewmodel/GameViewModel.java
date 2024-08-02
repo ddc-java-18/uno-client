@@ -29,6 +29,7 @@ public class GameViewModel extends ViewModel implements DefaultLifecycleObserver
   private final MutableLiveData<User> user;
   private final MutableLiveData<Throwable> throwable;
   private final CompositeDisposable pending;
+  private final MutableLiveData<Card> selectedCard;
 
   @Inject
   public GameViewModel(@ApplicationContext Context context, GameService gameService,
@@ -39,6 +40,7 @@ public class GameViewModel extends ViewModel implements DefaultLifecycleObserver
     throwable = new MutableLiveData<>();
     pending = new CompositeDisposable();
     user = new MutableLiveData<>(null);
+    selectedCard = new MutableLiveData<>();
     pollForUpdates();
     userRepository.getCurrentUser()
         .subscribe(user::postValue);
@@ -50,6 +52,14 @@ public class GameViewModel extends ViewModel implements DefaultLifecycleObserver
 
   public LiveData<User> getUser() {
     return user;
+  }
+
+  public LiveData<Card> getSelectedCard() {
+    return selectedCard;
+  }
+
+  public void setSelectedCard(Card card) {
+    selectedCard.postValue(card);
   }
 
   public void createGame() {

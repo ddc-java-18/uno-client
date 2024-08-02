@@ -45,7 +45,9 @@ public class GoogleSignInService {
             client
                 .silentSignIn()
                 .addOnSuccessListener(emitter::onSuccess)
-                .addOnSuccessListener((account) -> Log.d(TAG, account.getIdToken())) // FIXME: 7/2/24 Remove ASAP
+                .addOnSuccessListener((account) -> {
+                  Log.d(TAG, account.getIdToken());
+                }) // FIXME: 7/2/24 Remove ASAP
                 .addOnFailureListener(emitter::onError)
         )
         .observeOn(Schedulers.io());

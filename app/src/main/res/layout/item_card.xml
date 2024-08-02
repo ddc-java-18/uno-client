@@ -18,5 +18,12 @@
     android:contentDescription="@string/card_image_description"
     tools:src="@drawable/card_wild"/>
 
+  <ImageView
+    android:id="@+id/selected_card"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:contentDescription="selected card icon"
+    android:src="@drawable/selected_icon"/>
+<!--    app:tint="@color/card_green"-->
 
 </com.google.android.material.carousel.MaskableFrameLayout>

@@ -2,6 +2,7 @@ package edu.cnm.deepdive.uno.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,12 +40,18 @@ public class HandAdapter extends RecyclerView.Adapter<ViewHolder> {
   @Override
   public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
     Card card = cardList.get(position);
+
     ((Holder) holder).bind(position, card);
   }
 
   @Override
   public int getItemCount() {
     return cardList.size();
+  }
+
+  public void onItemClicked(int position) {
+    Card c = cardList.get(position);
+    notifyItemChanged(position);
   }
 
   private class Holder extends RecyclerView.ViewHolder {
@@ -69,15 +76,27 @@ public class HandAdapter extends RecyclerView.Adapter<ViewHolder> {
       String description =  card.getRank().toString() + " of ";
       description += (card.getSuit() != null) ? card.getSuit().toString() : "WILD";
 
+      if (card.isSelectedByUser()) {
+        binding.selectedCard.setVisibility(View.VISIBLE);
+      } else {
+        binding.selectedCard.setVisibility(View.INVISIBLE);
+      }
       binding.cardImage.setContentDescription(description);
-      binding.getRoot().setOnClickListener((v) -> onCardClickListener.onCardClick(position, card));
+      binding.getRoot().setOnClickListener((v) -> {
+        onCardClickListener.onCardClick(position, card);
+//        if (card.isSelectedByUser()) {
+//          binding.selectedCard.setVisibility(View.VISIBLE);
+//        } else {
+//          binding.selectedCard.setVisibility(View.INVISIBLE);
+//        }
+      });
     }
   }
 
   @FunctionalInterface
   public interface OnCardClickListener {
 
-    void onCardClick(int position, Card card);
+    void onCardClick(int position, Card newSelectedCard);
   }
 }
 

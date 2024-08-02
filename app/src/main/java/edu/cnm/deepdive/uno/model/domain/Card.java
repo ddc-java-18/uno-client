@@ -28,6 +28,9 @@ public class Card {
   @Expose(serialize = false)
   private final int position;
 
+  @Expose(serialize = false, deserialize = false)
+  private boolean selectedByUser;
+
   /**
    * Constructs an UNO Card with the specified Suit and Rank.
    *
@@ -99,6 +102,14 @@ public class Card {
    */
   public int getPosition() {
     return position;
+  }
+
+  public boolean isSelectedByUser() {
+    return selectedByUser;
+  }
+
+  public void setSelectedByUser(boolean selectedByUser) {
+    this.selectedByUser = selectedByUser;
   }
 
   /**
