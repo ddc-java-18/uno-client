@@ -84,11 +84,6 @@ public class HandAdapter extends RecyclerView.Adapter<ViewHolder> {
       binding.cardImage.setContentDescription(description);
       binding.getRoot().setOnClickListener((v) -> {
         onCardClickListener.onCardClick(position, card);
-//        if (card.isSelectedByUser()) {
-//          binding.selectedCard.setVisibility(View.VISIBLE);
-//        } else {
-//          binding.selectedCard.setVisibility(View.INVISIBLE);
-//        }
       });
     }
   }

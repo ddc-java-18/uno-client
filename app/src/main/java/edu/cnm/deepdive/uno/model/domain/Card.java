@@ -129,9 +129,9 @@ public class Card {
     NINE(true),
     SKIP(true),
     REVERSE(true),
-    DRAW_TWO(true),
-    DRAW_FOUR(false),
-    WILD(false);
+    DRAW_TWO(true);
+//    DRAW_FOUR(false),
+//    WILD(false);
 
     private final boolean suited;
 

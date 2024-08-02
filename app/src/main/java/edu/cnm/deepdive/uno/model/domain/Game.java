@@ -225,9 +225,10 @@ public final class Game {
     boolean isValidMove = false;
     Card topDiscardCard = this.topDiscard;
     if (topDiscardCard != null) {
-      if (card.getRank() == Rank.WILD || card.getRank() == Rank.DRAW_FOUR) {
-        isValidMove = true;
-      } else if (topDiscardCard.getSuit() == card.getSuit()
+//      if (card.getRank() == Rank.WILD || card.getRank() == Rank.DRAW_FOUR) {
+//        isValidMove = true;
+//      } else
+        if (topDiscardCard.getSuit() == card.getSuit()
           || topDiscardCard.getRank() == card.getRank()) {
         isValidMove = true;
       }

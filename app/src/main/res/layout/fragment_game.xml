@@ -10,102 +10,66 @@
   <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/recycler_view_users"
     android:layout_width="0dp"
-    android:layout_height="0dp"
+    android:layout_height="wrap_content"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
     app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintBottom_toTopOf="@id/create_game_btn"
+    app:layout_constraintBottom_toTopOf="@id/discard_top_card"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHeight_percent="0.40"/>
-
-<!--  <androidx.recyclerview.widget.RecyclerView-->
-<!--    android:id="@+id/recycler_view_hand"-->
-<!--    android:layout_width="0dp"-->
-<!--    android:layout_height="0dp"-->
-<!--    app:layoutManager="com.google.android.material.carousel.CarouselLayoutManager"-->
-<!--    app:layout_constraintTop_toTopOf="parent"-->
-<!--    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--    app:layout_constraintStart_toStartOf="parent"-->
-<!--    app:layout_constraintEnd_toEndOf="parent"-->
-<!--    app:layout_constraintVertical_bias="1.0"-->
-<!--    app:layout_constraintHeight_percent="0.25"-->
-<!--    tools:listitem="@layout/item_card"/>-->
-
-  <Button
-    android:id="@+id/create_game_btn"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toBottomOf="parent"
-    app:layout_constraintBottom_toTopOf="@id/get_game_btn"
-    android:text="create_game"/>
-
-  <Button
-    android:id="@+id/get_game_btn"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/create_game_btn"
-    app:layout_constraintBottom_toTopOf="@id/start_game_btn"
-    android:text="get_game"
-    />
-
-  <Button
-    android:id="@+id/start_game_btn"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/get_game_btn"
-    app:layout_constraintBottom_toTopOf="@id/submit_move_btn"
-    android:text="start_game"
-    />
-
-  <Button
-    android:id="@+id/submit_move_btn"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/start_game_btn"
-    app:layout_constraintBottom_toTopOf="@id/draw_card_btn"
-    android:text="make move"
-    />
-
-  <Button
-    android:id="@+id/draw_card_btn"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/submit_move_btn"
-    app:layout_constraintBottom_toTopOf="@id/discard_top_card"
-    android:text="draw card"
-    />
 
   <ImageView
     android:id="@+id/discard_top_card"
     android:layout_width="270dp"
     android:layout_height="270dp"
     android:layout_margin="@dimen/half_static_spacing"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintBottom_toTopOf="@id/recycler_view_hand"
+    app:layout_constraintTop_toBottomOf="@id/recycler_view_users"
+    app:layout_constraintBottom_toTopOf="@id/button_layout"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"/>
+
+  <LinearLayout
+    android:id="@+id/button_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toBottomOf="@id/discard_top_card"
+    app:layout_constraintBottom_toTopOf="@id/recycler_view_hand"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:gravity="center">
+
+    <Button
+      android:id="@+id/start_game_btn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/start_game_btn_label"
+      />
+
+    <Button
+      android:id="@+id/submit_move_btn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/make_move"
+      />
+
+    <Button
+      android:id="@+id/draw_card_btn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/draw_card"
+      />
+
+  </LinearLayout>
 
   <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/recycler_view_hand"
     android:layout_width="0dp"
-    android:layout_height="0dp"
+    android:layout_height="wrap_content"
     app:layoutManager="com.google.android.material.carousel.CarouselLayoutManager"
-    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/button_layout"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintVertical_bias="1.0"
-    app:layout_constraintHeight_percent="0.25"
     tools:listitem="@layout/item_card"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -114,8 +114,6 @@ public class GameFragment extends Fragment {
           }
         });
 
-    binding.createGameBtn.setOnClickListener((v) -> gameViewModel.createGame());
-    binding.getGameBtn.setOnClickListener((v) -> gameViewModel.getGame());
     binding.startGameBtn.setOnClickListener((v) -> gameViewModel.startGame());
     binding.drawCardBtn.setOnClickListener((v) -> gameViewModel.drawCard());
     binding.submitMoveBtn.setOnClickListener((v) -> submitMove(view));
