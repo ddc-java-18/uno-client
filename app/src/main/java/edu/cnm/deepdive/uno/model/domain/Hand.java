@@ -30,6 +30,9 @@ public class Hand {
   @Expose(serialize = false)
   private final boolean turn;
 
+  @Expose(serialize = false)
+  private final int numberOfCards;
+
   /**
    * Constructs a representation of a players hand in a game of UNO.
    */
@@ -40,6 +43,7 @@ public class Hand {
     points = 0;
     cards = new LinkedList<>();
     turn = false;
+    numberOfCards = 0;
   }
 
   /**
@@ -95,5 +99,9 @@ public class Hand {
    */
   public boolean isTurn() {
     return turn;
+  }
+
+  public int getNumberOfCards() {
+    return numberOfCards;
   }
 }

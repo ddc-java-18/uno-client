@@ -49,7 +49,7 @@ public class UsersAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     public void bind(Hand hand) {
       binding.userDisplayName.setText(hand.getUser().getDisplayName());
-      String numberOfCards = String.valueOf(hand.getCards().size());
+      String numberOfCards = String.valueOf(hand.getNumberOfCards());
       binding.userCardCount.setText(numberOfCards);
     }
   }
