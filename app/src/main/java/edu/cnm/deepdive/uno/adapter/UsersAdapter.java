@@ -1,41 +1,44 @@
 package edu.cnm.deepdive.uno.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
+import edu.cnm.deepdive.uno.databinding.ItemUserBinding;
 import edu.cnm.deepdive.uno.model.domain.User;
 import java.util.List;
 
-public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHolder> {
+public class UsersAdapter extends RecyclerView.Adapter<ViewHolder> {
 
-  private final List<User> users; // Updated variable name
+  private final List<User> users;
   private final LayoutInflater layoutInflater;
 
-  public UsersAdapter(List<User> users, LayoutInflater layoutInflater) {
+  public UsersAdapter(Context context, List<User> users) {
     this.users = users;
-    this.layoutInflater = layoutInflater;
+    this.layoutInflater = LayoutInflater.from(context);
   }
 
   @NonNull
   @Override
-  public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+  public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     ItemUserBinding binding = ItemUserBinding.inflate(layoutInflater, parent, false);
     return new UserViewHolder(binding);
   }
 
   @Override
-  public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
+  public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
     User user = users.get(position);
-    holder.bind(user);
+    ((UserViewHolder) holder).bind(user);
   }
 
   @Override
   public int getItemCount() {
-    return users.size(); // Return the size of the user list
+    return users.size();
   }
 
-  public static class UserViewHolder extends RecyclerView.ViewHolder {
+  private class UserViewHolder extends RecyclerView.ViewHolder {
     private final ItemUserBinding binding;
 
     public UserViewHolder(ItemUserBinding binding) {
@@ -44,8 +47,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     }
 
     public void bind(User user) {
-      binding.userNameTextView.setText(user.getName()); // Assuming User has a getName() method
-      // Bind other user properties as needed
+      binding.userDisplayName.setText(user.getDisplayName());
     }
   }
 }

@@ -1,5 +1,7 @@
 package edu.cnm.deepdive.uno.controller;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 import edu.cnm.deepdive.uno.R;
 import edu.cnm.deepdive.uno.adapter.HandAdapter;
+import edu.cnm.deepdive.uno.adapter.UsersAdapter;
 import edu.cnm.deepdive.uno.databinding.FragmentGameBinding;
 import edu.cnm.deepdive.uno.model.domain.Card;
 import edu.cnm.deepdive.uno.model.domain.Card.Rank;
@@ -32,6 +35,7 @@ import edu.cnm.deepdive.uno.viewmodel.LoginViewModel;
 import edu.cnm.deepdive.uno.viewmodel.UserViewModel;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -82,6 +86,7 @@ public class GameFragment extends Fragment {
             this.game = game;
             showHand();
             showTopDiscard();
+            showUsers();
           }
         });
 
@@ -135,7 +140,8 @@ public class GameFragment extends Fragment {
                   (position, card) -> {
                     this.selectedCard = card;
                     // TODO: 8/1/24 : do something with the clicked card!!
-                    Log.d(TAG, "Position: " + position + ", Rank: " + card.getRank() + ", Suit: " + card.getSuit());
+                    Log.d(TAG, "Position: " + position + ", Rank: " + card.getRank() + ", Suit: "
+                        + card.getSuit());
                   });
           binding.recyclerViewHand.setAdapter(adapter);
           break;
@@ -144,6 +150,20 @@ public class GameFragment extends Fragment {
     }
   }
 
+  private void showUsers() {
+    if (game != null && user != null) {
+      List<User> users = game.getHands().stream()
+          .map(Hand::getUser)
+          .collect(Collectors.toList());
+      UsersAdapter adapter = new UsersAdapter(requireContext(), users);
+      binding.recyclerViewUsers.setAdapter(adapter);
+    }
+  }
+
+
+  /**
+   * @noinspection DataFlowIssue
+   */
   private void showTopDiscard() {
     if (game != null) {
       Card topDiscard = game.getTopDiscard();

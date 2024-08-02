@@ -8,9 +8,9 @@
   tools:context=".controller.GameFragment">
 
   <androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/current_players_in_game"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
+    android:id="@+id/recycler_view_users"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintBottom_toTopOf="@id/create_game_btn"
     app:layout_constraintStart_toStartOf="parent"
