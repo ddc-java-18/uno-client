@@ -169,14 +169,13 @@ public class GameFragment extends Fragment {
 
   private void showUsers() {
     if (game != null && user != null) {
-      List<User> users = game.getHands().stream()
-          .map(Hand::getUser)
-          .collect(Collectors.toList());
-      UsersAdapter adapter = new UsersAdapter(requireContext(), users);
+//      List<User> users = game.getHands().stream()
+//          .map(Hand::getUser)
+//          .collect(Collectors.toList());
+      UsersAdapter adapter = new UsersAdapter(requireContext(), game.getHands());
       binding.recyclerViewUsers.setAdapter(adapter);
     }
   }
-
 
   /**
    * @noinspection DataFlowIssue

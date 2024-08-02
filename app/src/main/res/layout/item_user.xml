@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="wrap_content"
   android:layout_height="wrap_content"
-  android:orientation="vertical"
+  android:orientation="horizontal"
   android:padding="16dp"
-  android:gravity="center">
+  android:gravity="center_vertical">
 
   <TextView
     android:id="@+id/user_display_name"
@@ -15,11 +15,9 @@
     android:paddingBottom="@dimen/half_static_spacing"/>
 
   <TextView
-    android:id="@+id/numcards_user_hand"
+    android:id="@+id/user_card_count"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:textSize="16sp"
     android:paddingBottom="@dimen/half_static_spacing"/>
-
-
 </LinearLayout>
