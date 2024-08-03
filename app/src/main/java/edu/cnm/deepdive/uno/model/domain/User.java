@@ -6,6 +6,10 @@ import com.google.gson.annotations.SerializedName;
 import java.time.Instant;
 import java.util.Date;
 
+/**
+ * The User class encapsulates the essential attributes of a user/player in the UNO application.
+ * This class provides methods to retrieve user details.
+ */
 public class User {
 
   @Expose
@@ -18,6 +22,9 @@ public class User {
   @Expose
   private Date created;
 
+  /**
+   *  Constructs a User.
+   */
   public User() {
     id = null;
     displayName = "";

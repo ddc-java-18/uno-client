@@ -1,18 +1,14 @@
 package edu.cnm.deepdive.uno.service;
 
-import edu.cnm.deepdive.uno.model.domain.Card;
 import edu.cnm.deepdive.uno.model.domain.Game;
-import edu.cnm.deepdive.uno.model.domain.User;
 import io.reactivex.rxjava3.core.Single;
-import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 /**
- * The {@code UnoServiceProxy} interface defines the API endpoints for interacting with the UNO web
- * game service.
+ * The {@code UnoServiceLongProxy} interface defines the API endpoint for interacting with the UNO web
+ * game service to long poll for game updates.
  */
 public interface UnoServiceLongProxy {
 

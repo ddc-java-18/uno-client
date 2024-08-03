@@ -9,11 +9,13 @@ import androidx.fragment.app.Fragment;
 import dagger.hilt.android.AndroidEntryPoint;
 import edu.cnm.deepdive.uno.databinding.FragmentLoadingBinding;
 
-
+/**
+ * A {@link Fragment} subclass used to display and manage a loading view while a game is waiting
+ * for more players to join.
+ */
 @AndroidEntryPoint
 public class LoadingFragment extends Fragment {
 
-  private Button navigateToSettingsButton;
   private FragmentLoadingBinding binding;
 
   @Override

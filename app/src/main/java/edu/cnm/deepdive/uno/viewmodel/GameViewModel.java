@@ -1,13 +1,17 @@
 package edu.cnm.deepdive.uno.viewmodel;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.util.Log;
 import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.preference.PreferenceManager;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import dagger.hilt.android.qualifiers.ApplicationContext;
+import edu.cnm.deepdive.uno.R;
 import edu.cnm.deepdive.uno.model.domain.Card;
 import edu.cnm.deepdive.uno.model.domain.Game;
 import edu.cnm.deepdive.uno.model.domain.Hand;
@@ -18,6 +22,9 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import java.util.List;
 import javax.inject.Inject;
 
+/**
+ * ViewModel for managing game state and player operations/actions in the Uno application.
+ */
 @HiltViewModel
 public class GameViewModel extends ViewModel implements DefaultLifecycleObserver {
 
@@ -30,7 +37,17 @@ public class GameViewModel extends ViewModel implements DefaultLifecycleObserver
   private final MutableLiveData<Throwable> throwable;
   private final CompositeDisposable pending;
   private final MutableLiveData<Card> selectedCard;
+  private final SharedPreferences prefs;
+  private final String lengthPrefKey;
+  private final int lengthPrefDefault;
 
+  /**
+   * Constructor for GameViewModel.
+   *
+   * @param context        The application context.
+   * @param gameService    The service used to handle game operations.
+   * @param userRepository The repository used for managing user data.
+   */
   @Inject
   public GameViewModel(@ApplicationContext Context context, GameService gameService,
       UserRepository userRepository) {
@@ -41,27 +58,53 @@ public class GameViewModel extends ViewModel implements DefaultLifecycleObserver
     pending = new CompositeDisposable();
     user = new MutableLiveData<>(null);
     selectedCard = new MutableLiveData<>();
+    prefs = PreferenceManager.getDefaultSharedPreferences(context);
     pollForUpdates();
     userRepository.getCurrentUser()
         .subscribe(user::postValue);
+    lengthPrefKey = "";
+    lengthPrefDefault = 0;
   }
 
+  /**
+   * Returns LiveData containing the current Game (state the game is currently in).
+   *
+   * @return LiveData containing the current game.
+   */
   public LiveData<Game> getGame() {
     return game;
   }
 
+  /**
+   * Returns LiveData containing the current logged-in user.
+   *
+   * @return LiveData containing the current logged-in user
+   */
   public LiveData<User> getUser() {
     return user;
   }
 
+  /**
+   * Returns LiveData containing the currently selected card by the user.
+   *
+   * @return LiveData containing the currently selected card by the user.
+   */
   public LiveData<Card> getSelectedCard() {
     return selectedCard;
   }
 
+  /**
+   * Posts the provided {@link Card} object to LiveData.
+   *
+   * @param card the {@link Card} being posted to LiveData.
+   */
   public void setSelectedCard(Card card) {
     selectedCard.postValue(card);
   }
 
+  /**
+   * Creates a new UNO game using min and max player values from setting shared preferences.
+   */
   public void createGame() {
     // TODO: 7/30/24 Get the min and max players from settings/preferences
     gameService
@@ -73,6 +116,9 @@ public class GameViewModel extends ViewModel implements DefaultLifecycleObserver
         );
   }
 
+  /**
+   * Starts an existing UNO game from the server.
+   */
   public void startGame() {
     gameService
         .startGame(game.getValue())
@@ -83,19 +129,27 @@ public class GameViewModel extends ViewModel implements DefaultLifecycleObserver
         );
   }
 
+  /**
+   * Submits an UNO move (plays a card) for a player.
+   *
+   * @param card The UNO card being submitted for game play.
+   */
   public void makeMove(Card card) {
     Game game = this.game.getValue();
     gameService.submitMove(game, card)
         .subscribe(
             (g) -> {
-             this.game.postValue(g);
-             pollForUpdates();
+              this.game.postValue(g);
+              pollForUpdates();
             },
             this::postThrowable,
             pending
         );
   }
 
+  /**
+   * Draws a card for a player.
+   */
   public void drawCard() {
     Game game = this.game.getValue();
     gameService.drawCard(game)
@@ -109,6 +163,9 @@ public class GameViewModel extends ViewModel implements DefaultLifecycleObserver
         );
   }
 
+  /**
+   * Polls the UNO webservice for Game updates.
+   */
   public void pollForUpdates() {
     User currentUser = user.getValue();
     Game currentGame = game.getValue();
@@ -146,6 +203,5 @@ public class GameViewModel extends ViewModel implements DefaultLifecycleObserver
     Log.e(TAG, throwable.getMessage(), throwable);
     this.throwable.postValue(throwable);
   }
-
 
 }

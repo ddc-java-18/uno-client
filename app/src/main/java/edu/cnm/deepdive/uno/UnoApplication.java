@@ -25,9 +25,8 @@ import androidx.preference.PreferenceManager;
 import dagger.hilt.android.HiltAndroidApp;
 
 /**
- * Initializes (in the {@link #onCreate()} method) application-level resources that require
- * static (or singleton) initialization. This class <strong>must</strong> be referenced in
- * {@code AndroidManifest.xml}, or it will not be loaded and used by the Android system.
+ * The UNO Application class which initializes application-wide resources and handles updates to
+ *  shared preferences related to dark mode settings.
  */
 @HiltAndroidApp
 public class UnoApplication extends Application implements OnSharedPreferenceChangeListener {
@@ -60,6 +59,11 @@ public class UnoApplication extends Application implements OnSharedPreferenceCha
     }
   }
 
+  /**
+   * Updates the dark mode setting based on the current preference value.
+   *
+   * @param sharedPreferences The application's shared preferences.
+   */
   private void updateDarkMode(SharedPreferences sharedPreferences) {
     String darkModePref = sharedPreferences.getString(darkModePrefKey, darkModePrefDefault);
     int mode = switch (darkModePref) {

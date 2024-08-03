@@ -20,6 +20,9 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Module for providing UnoService dependencies using Hilt.
+ */
 @Module
 @InstallIn(SingletonComponent.class)
 public class UnoServiceModule {
@@ -35,8 +38,8 @@ public class UnoServiceModule {
    * Provides an UnoServiceProxy as a singleton using Hilt/Dagger dependency injection.
    *
    * <p>
-   *   This method initializes the app's GSON serializer, OkHttp web client, and provides them for
-   *   the creation of a Retrofit object.
+   * This method initializes the app's GSON serializer, OkHttp web client, and provides them for the
+   * creation of a Retrofit object.
    * </p>
    *
    * @param context the app's ApplicationContext.
@@ -67,6 +70,18 @@ public class UnoServiceModule {
     return retrofit.create(UnoServiceProxy.class);
   }
 
+  /**
+   * Provides an UnoServiceLongProxy as a singleton using Hilt/Dagger dependency injection.
+   *
+   * <p>
+   * This method initializes the app's GSON serializer, OkHttp web client, and provides them for the
+   * creation of a Retrofit object. This proxy is responsible only for long polling in the
+   * application.
+   * </p>
+   *
+   * @param context the app's ApplicationContext.
+   * @return UnoServiceProxy.
+   */
   @Provides
   @Singleton
   public UnoServiceLongProxy provideLongProxy(@ApplicationContext Context context) {
