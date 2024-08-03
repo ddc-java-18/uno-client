@@ -36,6 +36,7 @@
   <string name="start_game_btn_label">Start game</string>
   <string name="make_move">Play card</string>
   <string name="draw_card">Draw card</string>
+  <string name="player_max_pref_key">player_max_pref</string>
 
   <string-array name="dark_mode_options">
     <item>Yes</item>

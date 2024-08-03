@@ -38,8 +38,8 @@ public class GameViewModel extends ViewModel implements DefaultLifecycleObserver
   private final CompositeDisposable pending;
   private final MutableLiveData<Card> selectedCard;
   private final SharedPreferences prefs;
-  private final String lengthPrefKey;
-  private final int lengthPrefDefault;
+  private final String maxPlayerPrefKey;
+  private final int maxPlayerPrefDefault;
 
   /**
    * Constructor for GameViewModel.
@@ -59,11 +59,11 @@ public class GameViewModel extends ViewModel implements DefaultLifecycleObserver
     user = new MutableLiveData<>(null);
     selectedCard = new MutableLiveData<>();
     prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    maxPlayerPrefKey = context.getString(R.string.player_max_pref_key);
+    maxPlayerPrefDefault = context.getResources().getInteger(R.integer.max_player_pref_default);
     pollForUpdates();
     userRepository.getCurrentUser()
         .subscribe(user::postValue);
-    lengthPrefKey = "";
-    lengthPrefDefault = 0;
   }
 
   /**
@@ -107,8 +107,9 @@ public class GameViewModel extends ViewModel implements DefaultLifecycleObserver
    */
   public void createGame() {
     // TODO: 7/30/24 Get the min and max players from settings/preferences
+    int maxPlayer = prefs.getInt(maxPlayerPrefKey, maxPlayerPrefDefault);
     gameService
-        .createGame(2, 6)
+        .createGame(2, maxPlayer)
         .subscribe(
             game::postValue,
             this::postThrowable,
