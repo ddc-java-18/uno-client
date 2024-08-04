@@ -5,6 +5,9 @@ import android.os.Bundle;
 import dagger.hilt.android.AndroidEntryPoint;
 import edu.cnm.deepdive.uno.R;
 
+/**
+ * Activity for displaying and managing application settings.
+ */
 @AndroidEntryPoint
 public class SettingsActivity extends AppCompatActivity {
 

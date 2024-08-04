@@ -14,6 +14,11 @@ import dagger.hilt.android.AndroidEntryPoint;
 import edu.cnm.deepdive.uno.databinding.ActivityLoginBinding;
 import edu.cnm.deepdive.uno.viewmodel.LoginViewModel;
 
+/**
+ * Handles user login.
+ *
+ * <p>Upon successful login, the activity navigates the use to the MainActivity.</p>
+ */
 @AndroidEntryPoint
 public class LoginActivity extends AppCompatActivity {
 

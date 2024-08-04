@@ -3,4 +3,5 @@
   <integer name="player_pref_min">2</integer>
   <integer name="player_pref_max">6</integer>
   <integer name="player_pref_default">4</integer>
+  <integer name="max_player_pref_default">6</integer>
 </resources>

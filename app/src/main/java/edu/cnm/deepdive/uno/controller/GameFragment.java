@@ -1,7 +1,5 @@
 package edu.cnm.deepdive.uno.controller;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
@@ -35,24 +33,22 @@ import edu.cnm.deepdive.uno.viewmodel.LoginViewModel;
 import edu.cnm.deepdive.uno.viewmodel.UserViewModel;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-
+/**
+ * A {@link Fragment} subclass used to display and manage the application Game screen.
+ */
 public class GameFragment extends Fragment {
 
   private static final String TAG = GameFragment.class.getSimpleName();
 
   private GameViewModel gameViewModel;
   private UserViewModel userViewModel;
-  private LoginViewModel loginViewModel;
   private FragmentGameBinding binding;
-  private RecyclerView recyclerView;
   private Map<Rank, Integer> rankDrawables;
   private Map<Suit, Integer> suitColors;
-
   private Game game;
   private User user;
   private Card selectedCard;
@@ -120,6 +116,13 @@ public class GameFragment extends Fragment {
 
   }
 
+  /**
+   * Helper method used to submit a player move to the server. If, the user is trying to submit an
+   * invalid move, rather than sending the request to the server, a toast with an error message
+   * is displayed on the screen notifying the user.
+   *
+   * @param view of the GameFragment.
+   */
   private void submitMove(View view) {
     MoveState moveState = game.validateMove(selectedCard, user);
     String message = switch (moveState) {
@@ -142,6 +145,10 @@ public class GameFragment extends Fragment {
     }
   }
 
+  /**
+   * Helper method used to render a player's hand on the screen. This method, renders a player's
+   * hand utilizing and instance of HandAdapter.
+   */
   private void showHand() {
     if (game != null && user != null) {
       for (Hand hand : game.getHands()) {
@@ -152,7 +159,6 @@ public class GameFragment extends Fragment {
                   selectedCard.setSelectedByUser(false);
                 }
                 card.setSelectedByUser(true);
-//                    selectedCard = card;
                 gameViewModel.setSelectedCard(card);
                 adapter.notifyDataSetChanged();
                 Log.d(TAG, "Position: " + position + ", Rank: " + card.getRank() + ", Suit: "
@@ -165,17 +171,20 @@ public class GameFragment extends Fragment {
     }
   }
 
+  /**
+   * Helper method used to render the current players who are a part of an UNO game.
+   */
   private void showUsers() {
     if (game != null && user != null) {
-//      List<User> users = game.getHands().stream()
-//          .map(Hand::getUser)
-//          .collect(Collectors.toList());
       UsersAdapter adapter = new UsersAdapter(requireContext(), game.getHands());
       binding.recyclerViewUsers.setAdapter(adapter);
     }
   }
 
   /**
+   * Helper method used to render the top discard card in a game of UNO. If there is no current
+   * top discard, then a default card image is rendered.
+   *
    * @noinspection DataFlowIssue
    */
   private void showTopDiscard() {
@@ -195,6 +204,11 @@ public class GameFragment extends Fragment {
     }
   }
 
+  /**
+   * Helper method used to map a {@code Rank} to a drawable resource representing the rank.
+   *
+   * @return Map whose key is a {@code Rank} and value is a corresponding drawable resource.
+   */
   private Map<Rank, Integer> getRankDrawables() {
     Context context = requireContext();
     Resources resources = context.getResources();
@@ -208,6 +222,11 @@ public class GameFragment extends Fragment {
     return cardGraphics;
   }
 
+  /**
+   * Helper method used to map a {@code Suit} to a color resource.
+   *
+   * @return Map whose key is a {@code Suit} and value is a corresponding color resource.
+   */
   private Map<Suit, Integer> getSuitColors() {
     Context context = requireContext();
     Resources resources = context.getResources();

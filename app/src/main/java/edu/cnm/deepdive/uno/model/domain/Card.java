@@ -55,6 +55,10 @@ public class Card {
     return id;
   }
 
+  /**
+   * Sets the id of a card.
+   * @param id used to set the id of the card.
+   */
   public void setId(String id) {
     this.id = id;
   }
@@ -104,10 +108,20 @@ public class Card {
     return position;
   }
 
+  /**
+   * Returns if the card is selected by a user.
+   *
+   * @return boolean indicating if the card is selected by a user.
+   */
   public boolean isSelectedByUser() {
     return selectedByUser;
   }
 
+  /**
+   * Sets the selectedByUser field of a card.
+   *
+   * @param selectedByUser boolean valued used to set the card's selectedByUser field.
+   */
   public void setSelectedByUser(boolean selectedByUser) {
     this.selectedByUser = selectedByUser;
   }
@@ -135,9 +149,20 @@ public class Card {
 
     private final boolean suited;
 
+    /**
+     * Constructor used to initialize a rank.
+     *
+     * @param suited boolean indicating if the Rank should have an associated suit or not.
+     */
     Rank(boolean suited) {
       this.suited = suited;
     }
+
+    /**
+     * Returns if the Rank should have an associated suit.
+     *
+     * @return boolean indicating if the Rank should have an associated suit.
+     */
     public boolean isSuited() {
       return suited;
     }

@@ -101,6 +101,11 @@ public class Hand {
     return turn;
   }
 
+  /**
+   * Returns the number of cards in a hand.
+   *
+   * @return int representing the number of cards in a hand.
+   */
   public int getNumberOfCards() {
     return numberOfCards;
   }

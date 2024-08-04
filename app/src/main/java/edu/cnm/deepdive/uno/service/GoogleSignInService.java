@@ -20,6 +20,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * Service for handling Google Sign-In operations.
+ */
 @Singleton
 public class GoogleSignInService {
 
@@ -28,6 +31,11 @@ public class GoogleSignInService {
 
   private final GoogleSignInClient client;
 
+  /**
+   * Constructs an instance of GoogleSignInService used to handel Google sign-in operations.
+   *
+   * @param context The application's context.
+   */
   @Inject
   GoogleSignInService(@ApplicationContext Context context) {
     String clientId = context.getString(R.string.client_id);
@@ -40,6 +48,11 @@ public class GoogleSignInService {
     client = GoogleSignIn.getClient(context, options);
   }
 
+  /**
+   * Performs a silentSignIn and logs the associated bearer token.
+   *
+   * @return RxJava Single of GoogleSignInAccount.
+   */
   public Single<GoogleSignInAccount> refresh() {
     return Single.create((SingleEmitter<GoogleSignInAccount> emitter) ->
             client
@@ -53,22 +66,38 @@ public class GoogleSignInService {
         .observeOn(Schedulers.io());
   }
 
+  /**
+   * Refreshes the sign-in bearer token.
+   *
+   * @return RxJava Single containing the bearer token.
+   */
   public Single<String> refreshToken() {
     return refresh()
         .map((account) -> String.format(BEARER_TOKEN_FORMAT, account.getIdToken()));
   }
 
+  /**
+   * Kicks-off the Google sign-in process.
+   *
+   * @param launcher An ActivityResultLauncher used to launch the sign-in process.
+   */
   public void startSignIn(ActivityResultLauncher<Intent> launcher) {
     launcher.launch(client.getSignInIntent());
   }
 
+  /**
+   * Completes the sign-in process.
+   *
+   * @param result the ActivityResult
+   * @return RxJava Single that emits the signed in GoogleSignInAccount.
+   */
   public Single<GoogleSignInAccount> completeSignIn(ActivityResult result) {
     return Single.create((SingleEmitter<GoogleSignInAccount> emitter) -> {
           try {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(
                 result.getData());
             GoogleSignInAccount account = task.getResult(ApiException.class);
-            Log.d(TAG, account.getIdToken()); // FIXME: 7/2/24 Remove ASAP
+            Log.d(TAG, account.getIdToken());
             emitter.onSuccess(account);
           } catch (ApiException e) {
             emitter.onError(e);
@@ -77,6 +106,11 @@ public class GoogleSignInService {
         .observeOn(Schedulers.io());
   }
 
+  /**
+   * Handles signing a user out of the application.
+   *
+   * @return A RxJava Completable which indicates the user has been signed out.
+   */
   public Completable signOut() {
     return Completable.create((emitter) ->
         client

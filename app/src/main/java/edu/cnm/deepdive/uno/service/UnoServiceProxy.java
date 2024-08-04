@@ -68,9 +68,13 @@ public interface UnoServiceProxy {
   Single<Game> drawCard(@Path("gameKey") String gameKey,
       @Header("Authorization") String bearerToken);
 
+  /**
+   * Gets the user associated with the provided authentication bearer token.
+   *
+   * @param bearerToken BearerToken used to authenticate the user.
+   * @return a {@code Single<User>} which emits the User associated with provided bearer token.
+   */
   @GET("users/me")
   Single<User> getCurrentUser(@Header("Authorization") String bearerToken);
-
-  // TODO: 7/30/24 Implement the PUT request to users/me
 
 }

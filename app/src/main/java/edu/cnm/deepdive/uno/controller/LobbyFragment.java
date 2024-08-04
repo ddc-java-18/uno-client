@@ -14,6 +14,10 @@ import dagger.hilt.android.AndroidEntryPoint;
 import edu.cnm.deepdive.uno.databinding.FragmentLobbyBinding;
 import edu.cnm.deepdive.uno.viewmodel.GameViewModel;
 
+/**
+ * A {@link Fragment} subclass used to display the Lobby "screen" that is displayed when a user
+ * is about to join/create a new game of UNO.
+ */
 @AndroidEntryPoint
 public class LobbyFragment extends Fragment {
 

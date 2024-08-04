@@ -15,6 +15,12 @@ import edu.cnm.deepdive.uno.databinding.ActivityMainBinding;
 import edu.cnm.deepdive.uno.viewmodel.GameViewModel;
 import edu.cnm.deepdive.uno.viewmodel.LoginViewModel;
 
+/**
+ * Main activity of the application.
+ *
+ * <p>Handles creating the MainActivity menu options for the settings and sign-out menu. It also
+ * handles/sets up navigation for this activity.</p>
+ */
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
