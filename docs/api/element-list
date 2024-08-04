@@ -1,0 +1,7 @@
+edu.cnm.deepdive.uno
+edu.cnm.deepdive.uno.adapter
+edu.cnm.deepdive.uno.controller
+edu.cnm.deepdive.uno.hilt
+edu.cnm.deepdive.uno.model.domain
+edu.cnm.deepdive.uno.service
+edu.cnm.deepdive.uno.viewmodel

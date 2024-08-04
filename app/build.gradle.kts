@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 import java.io.FileInputStream
-import java.util.Properties
+import java.util.*
 
 plugins {
     alias(libs.plugins.android.application)
@@ -145,6 +145,82 @@ dependencies {
     androidTestImplementation(libs.junit.params)
     androidTestImplementation(libs.espresso.core)
 
+}
+
+if (project.hasProperty("javadocDestDir")) {
+    tasks.clean {
+        delete.add(projectDir.toPath().resolve(project.property("javadocDestDir") as String).toFile())
+    }
+}
+
+tasks.register("generateApiDoc") {
+    group = "reporting"
+    description = "Generates Javadoc HTML for all build variants. (Generated output for variants " +
+            "after the first will overwrite the output for previous variants.)"
+}
+
+android.applicationVariants.configureEach {
+
+    val simpleName = name
+    val variantName = name.replaceFirstChar {
+        if (it.isLowerCase()) {
+            it.titlecase(Locale.getDefault())
+        } else {
+            it.toString()
+        }
+    }
+
+    val docTitle = "${project.property("appName")} ${android.defaultConfig.versionName}"
+
+    val task = project.tasks.create("generate${variantName}Javadoc", Javadoc::class.java) {
+        title = docTitle
+        group = "reporting"
+        description = "Generates Javadoc for $simpleName build variant."
+
+        source = javaCompileProvider.get().source
+        exclude(
+            "**/*FragmentDirections.java",
+            "**/*FragmentArgs.java",
+            "**/databinding/*.java",
+            "**/*_*.java",
+            "**/R.java",
+            "**/BuildConfig*.java"
+        )
+
+        if (project.hasProperty("javadocDestDir")) {
+            setDestinationDir(projectDir.toPath().resolve(project.property("javadocDestDir") as String).toFile())
+        }
+
+        doFirst {
+            classpath = project.files(
+                projectDir.resolve("build/intermediates/javac/$simpleName/classes"),
+                javaCompileProvider.get().classpath.files,
+                android.bootClasspath
+            )
+        }
+
+        with(options as StandardJavadocDocletOptions) {
+            windowTitle = docTitle
+            memberLevel = JavadocMemberLevel.PROTECTED
+            isLinkSource = true
+            isAuthor = false
+            links(
+                "https://docs.oracle.com/en/java/javase/${libs.versions.java.get()}/docs/api/",
+                "https://reactivex.io/RxJava/3.x/javadoc/",
+                "https://javadoc.io/doc/com.google.dagger/dagger/${libs.versions.hilt.get()}/",
+                "https://javadoc.io/doc/com.google.code.gson/gson/${libs.versions.gson.get()}/",
+                "https://square.github.io/retrofit/2.x/retrofit/"
+            )
+            linksOffline("https://developer.android.com/reference", "$projectDir/..")
+            addBooleanOption("html5", true)
+            addStringOption("Xdoclint:none", "-quiet")
+        }
+
+        isFailOnError = true
+    }
+
+    task.dependsOn(tasks["assemble$variantName"])
+    tasks["generateApiDoc"].dependsOn(task)
 }
 
 fun getLocalProperty(name: String): String? {
