@@ -15,6 +15,7 @@
  */
 import java.io.FileInputStream
 import java.util.*
+import java.util.Locale
 
 plugins {
     alias(libs.plugins.android.application)
@@ -147,11 +148,6 @@ dependencies {
 
 }
 
-if (project.hasProperty("javadocDestDir")) {
-    tasks.clean {
-        delete.add(projectDir.toPath().resolve(project.property("javadocDestDir") as String).toFile())
-    }
-}
 
 tasks.register("generateApiDoc") {
     group = "reporting"
@@ -207,9 +203,10 @@ android.applicationVariants.configureEach {
             links(
                 "https://docs.oracle.com/en/java/javase/${libs.versions.java.get()}/docs/api/",
                 "https://reactivex.io/RxJava/3.x/javadoc/",
-                "https://javadoc.io/doc/com.google.dagger/dagger/${libs.versions.hilt.get()}/",
-                "https://javadoc.io/doc/com.google.code.gson/gson/${libs.versions.gson.get()}/",
-                "https://square.github.io/retrofit/2.x/retrofit/"
+                "https://www.javadoc.io/doc/com.google.code.gson/gson/",
+                "https://square.github.io/retrofit/2.x/retrofit/",
+                "https://javadoc.io/doc/com.google.dagger/hilt-android/latest/index.html"
+
             )
             linksOffline("https://developer.android.com/reference", "$projectDir/..")
             addBooleanOption("html5", true)
