@@ -38,6 +38,8 @@
   <string name="draw_card">Draw card</string>
   <string name="player_max_pref_key">player_max_pref</string>
   <string name="leave_game">Leave game</string>
+  <string name="game_over_title">Game Over:</string>
+  <string name="game_over_winner_name">" wins!"</string>
 
   <string-array name="dark_mode_options">
     <item>Yes</item>

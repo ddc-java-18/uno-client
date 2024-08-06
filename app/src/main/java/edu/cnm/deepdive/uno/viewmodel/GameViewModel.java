@@ -14,6 +14,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext;
 import edu.cnm.deepdive.uno.R;
 import edu.cnm.deepdive.uno.model.domain.Card;
 import edu.cnm.deepdive.uno.model.domain.Game;
+import edu.cnm.deepdive.uno.model.domain.Game.GameState;
 import edu.cnm.deepdive.uno.model.domain.Hand;
 import edu.cnm.deepdive.uno.model.domain.User;
 import edu.cnm.deepdive.uno.service.GameService;
@@ -170,7 +171,7 @@ public class GameViewModel extends ViewModel implements DefaultLifecycleObserver
   public void pollForUpdates() {
     User currentUser = user.getValue();
     Game currentGame = game.getValue();
-    if (currentUser != null && currentGame != null) {
+    if (currentUser != null && currentGame != null && currentGame.getGameState() != GameState.COMPLETED) {
       gameService.getGame(currentGame)
           .subscribe(
               (g) -> {

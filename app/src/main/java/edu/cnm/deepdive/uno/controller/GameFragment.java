@@ -25,6 +25,7 @@ import edu.cnm.deepdive.uno.model.domain.Card;
 import edu.cnm.deepdive.uno.model.domain.Card.Rank;
 import edu.cnm.deepdive.uno.model.domain.Card.Suit;
 import edu.cnm.deepdive.uno.model.domain.Game;
+import edu.cnm.deepdive.uno.model.domain.Game.GameState;
 import edu.cnm.deepdive.uno.model.domain.Game.MoveState;
 import edu.cnm.deepdive.uno.model.domain.Hand;
 import edu.cnm.deepdive.uno.model.domain.User;
@@ -81,10 +82,18 @@ public class GameFragment extends Fragment {
         .observe(lifecycleOwner, (game) -> {
           if (game != null) {
             this.game = game;
-            showHand();
             showTopDiscard();
             showUsers();
+            if (game.getGameState() == GameState.COMPLETED) {
+              Snackbar.make(
+                  binding
+                      .getRoot(), getString(R.string.game_over_title) + game
+                      .getWinner()
+                      .getDisplayName()
+                      + getString(R.string.game_over_winner_name), Snackbar.LENGTH_LONG).show();
+            }
           }
+          showHand();
         });
 
     userViewModel = new ViewModelProvider(context).get(UserViewModel.class);
@@ -93,10 +102,10 @@ public class GameFragment extends Fragment {
         .observe(lifecycleOwner, (user) -> {
           if (user != null) {
             this.user = user;
-            gameViewModel.pollForUpdates();
-            showHand();
+            gameViewModel.pollForUpdates(); // TODO: 8/6/24 Check to see if polling is necessary
             gameViewModel.setSelectedCard(null);
           }
+          showHand();
         });
 
     gameViewModel
@@ -118,8 +127,8 @@ public class GameFragment extends Fragment {
 
   /**
    * Helper method used to submit a player move to the server. If, the user is trying to submit an
-   * invalid move, rather than sending the request to the server, a toast with an error message
-   * is displayed on the screen notifying the user.
+   * invalid move, rather than sending the request to the server, a toast with an error message is
+   * displayed on the screen notifying the user.
    *
    * @param view of the GameFragment.
    */
@@ -182,8 +191,8 @@ public class GameFragment extends Fragment {
   }
 
   /**
-   * Helper method used to render the top discard card in a game of UNO. If there is no current
-   * top discard, then a default card image is rendered.
+   * Helper method used to render the top discard card in a game of UNO. If there is no current top
+   * discard, then a default card image is rendered.
    *
    * @noinspection DataFlowIssue
    */
