@@ -112,4 +112,11 @@ public class GameService {
         .subscribeOn(scheduler);
   }
 
+  public Single<Game> leaveGame(Game game) {
+    return Single.fromSupplier(game::getId)
+        .flatMap((gameId) -> signInService
+            .refreshToken()
+            .flatMap((token) -> proxy.leaveGame(Long.valueOf(gameId), token)))
+        .subscribeOn(scheduler);
+  }
 }

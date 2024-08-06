@@ -77,4 +77,7 @@ public interface UnoServiceProxy {
   @GET("users/me")
   Single<User> getCurrentUser(@Header("Authorization") String bearerToken);
 
+  @POST("games/{gameKey}/leave")
+  Single<Game> leaveGame(Long gameId, String token);
+
 }
