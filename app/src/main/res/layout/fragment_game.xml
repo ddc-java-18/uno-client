@@ -38,6 +38,7 @@
     android:id="@+id/button_layout"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
+    android:theme="@style/Button"
     app:layout_constraintBottom_toTopOf="@id/recycler_view_hand"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
@@ -54,6 +55,7 @@
       android:id="@+id/submit_move_btn"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:visibility="gone"
       android:text="@string/make_move"
       />
 
@@ -61,6 +63,7 @@
       android:id="@+id/draw_card_btn"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:visibility="gone"
       android:text="@string/draw_card"/>
 
     <Button

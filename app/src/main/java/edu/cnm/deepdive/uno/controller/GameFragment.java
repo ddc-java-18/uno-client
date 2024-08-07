@@ -175,10 +175,17 @@ public class GameFragment extends Fragment {
                     + card.getSuit());
               });
           binding.recyclerViewHand.setAdapter(adapter);
-          binding.startGameBtn.setEnabled(game.getGameState() == GameState.CREATED);
-          binding.leaveGameBtn.setEnabled(game.getGameState() != GameState.COMPLETED);
-          binding.drawCardBtn.setEnabled(hand.isTurn());
-          binding.submitMoveBtn.setEnabled(hand.isTurn());
+          binding.startGameBtn.setVisibility((game.getGameState() == GameState.CREATED) ? View.VISIBLE:View.GONE);
+//          binding.leaveGameBtn.setVisibility((game.getGameState() == GameState.COMPLETED) ? View.GONE:View.VISIBLE);
+          if (game.getGameState() == GameState.IN_PROGRESS) {
+            binding.drawCardBtn.setVisibility(View.VISIBLE);
+            binding.submitMoveBtn.setVisibility(View.VISIBLE);
+            binding.drawCardBtn.setEnabled(hand.isTurn());
+            binding.submitMoveBtn.setEnabled(hand.isTurn());
+          } else {
+            binding.drawCardBtn.setVisibility(View.GONE);
+            binding.submitMoveBtn.setVisibility(View.GONE);
+          }
           break;
         }
       }

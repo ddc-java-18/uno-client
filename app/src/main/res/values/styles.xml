@@ -16,14 +16,18 @@
 -->
 <resources>
   <!-- Base application theme. -->
-  <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+  <style name="AppTheme" parent="Theme.Material3.DayNight">
     <!-- Customize your theme here. -->
+    <item name="android:windowTitleBackgroundStyle">@style/WindowTitleBackground</item>
     <item name="colorPrimary">@color/primary_color</item>
     <item name="colorPrimaryDark">@color/primary_color_dark</item>
     <item name="colorAccent">@color/accent_color</item>
 
   </style>
 
+  <style name="WindowTitleBackground">
+    <item name="android:background">@color/card_red</item>
+  </style>
   <style name="TableContent.Header">
     <item name="android:textStyle">bold</item>
   </style>
@@ -36,5 +40,11 @@
   </style>
 
   <style name="TableContent">tablecontent_header</style>
+
+  <style name="Button" parent="AppTheme">
+    <item name="android:textSize">12sp</item>
+    <item name="textAllCaps">true</item>
+    <item name="android:layout_margin">@dimen/half_dynamic_spacing</item>
+  </style>
 
 </resources>
