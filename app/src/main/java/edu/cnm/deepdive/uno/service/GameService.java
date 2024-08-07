@@ -2,6 +2,7 @@ package edu.cnm.deepdive.uno.service;
 
 import edu.cnm.deepdive.uno.model.domain.Card;
 import edu.cnm.deepdive.uno.model.domain.Game;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -26,9 +27,10 @@ public class GameService {
   /**
    * Constructs an instance of the GameService using the provided proxies and GoogleSignInService.
    *
-   * @param proxy         The proxy used to send game operation requests to application's web service.
-   * @param longProxy     The proxy used to send long-polling request to the application's web service for game
-   *                      updates.
+   * @param proxy         The proxy used to send game operation requests to application's web
+   *                      service.
+   * @param longProxy     The proxy used to send long-polling request to the application's web
+   *                      service for game updates.
    * @param signInService Google sign-in service used to authenticate users.
    */
   @Inject
@@ -64,10 +66,9 @@ public class GameService {
    * @return An RxJava Single of the Game which is started.
    */
   public Single<Game> startGame(Game game) {
-    return Single.fromSupplier(() -> game.getId())
-        .flatMap((gameId) -> signInService
-            .refreshToken()
-            .flatMap((token) -> proxy.startGame(gameId, token)))
+    return signInService
+        .refreshToken()
+        .flatMap((token) -> proxy.startGame(game.getId(), token))
         .subscribeOn(scheduler);
   }
 
@@ -79,10 +80,9 @@ public class GameService {
    * @return An RxJava Single of the Game which is getting a move submitted to.
    */
   public Single<Game> submitMove(Game game, Card card) {
-    return Single.fromSupplier(() -> card)
-        .flatMap((c) -> signInService
-            .refreshToken()
-            .flatMap((token) -> proxy.submitMove(game.getId(), token, c)))
+    return signInService
+        .refreshToken()
+        .flatMap((token) -> proxy.submitMove(game.getId(), token, card))
         .subscribeOn(scheduler);
   }
 
@@ -93,10 +93,9 @@ public class GameService {
    * @return An RxJava Single of the Game which gets updated after the user's draw.
    */
   public Single<Game> drawCard(Game game) {
-    return Single.fromSupplier(() -> game)
-        .flatMap((g) -> signInService
-            .refreshToken()
-            .flatMap((token) -> proxy.drawCard(game.getId(), token)))
+    return signInService
+        .refreshToken()
+        .flatMap((token) -> proxy.drawCard(game.getId(), token))
         .subscribeOn(scheduler);
   }
 
@@ -107,16 +106,16 @@ public class GameService {
    * @return An RxJava Single of the Game which was retrieved.
    */
   public Single<Game> getGame(Game game) {
-    return signInService.refreshToken()
+    return signInService
+        .refreshToken()
         .flatMap((token) -> longProxy.getGame(game.getId(), token))
         .subscribeOn(scheduler);
   }
 
-  public Single<Game> leaveGame(Game game) {
-    return Single.fromSupplier(game::getId)
-        .flatMap((gameId) -> signInService
-            .refreshToken()
-            .flatMap((token) -> proxy.leaveGame(Long.valueOf(gameId), token)))
+  public Completable leaveGame(Game game) {
+    return signInService
+        .refreshToken()
+        .flatMapCompletable((token) -> proxy.leaveGame(game.getId(), token))
         .subscribeOn(scheduler);
   }
 }

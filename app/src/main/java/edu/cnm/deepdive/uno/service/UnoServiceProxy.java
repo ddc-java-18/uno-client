@@ -3,6 +3,7 @@ package edu.cnm.deepdive.uno.service;
 import edu.cnm.deepdive.uno.model.domain.Card;
 import edu.cnm.deepdive.uno.model.domain.Game;
 import edu.cnm.deepdive.uno.model.domain.User;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -78,6 +79,5 @@ public interface UnoServiceProxy {
   Single<User> getCurrentUser(@Header("Authorization") String bearerToken);
 
   @POST("games/{gameKey}/leave")
-  Single<Game> leaveGame(Long gameId, String token);
-
+  Completable leaveGame(@Path("gameKey") String gameKey, @Header("Authorization") String bearerToken);
 }

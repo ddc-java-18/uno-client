@@ -14,6 +14,10 @@
     android:id="@+id/navigate_to_lobby"
     app:destination="@id/lobby_fragment"/>
 
+  <action
+    android:id="@+id/navigate_from_game_fragment_to_lobby_fragment"
+    app:destination="@id/lobby_fragment"/>
+
   <activity
     android:id="@+id/settings_fragment"
     android:label="@string/settings_title"

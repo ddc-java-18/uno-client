@@ -20,6 +20,7 @@ import edu.cnm.deepdive.uno.model.domain.User;
 import edu.cnm.deepdive.uno.service.GameService;
 import edu.cnm.deepdive.uno.service.UserRepository;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -36,11 +37,13 @@ public class GameViewModel extends ViewModel implements DefaultLifecycleObserver
   private final MutableLiveData<Game> game;
   private final MutableLiveData<User> user;
   private final MutableLiveData<Throwable> throwable;
+  private final MutableLiveData<Boolean> gameLeft;
   private final CompositeDisposable pending;
   private final MutableLiveData<Card> selectedCard;
   private final SharedPreferences prefs;
   private final String maxPlayerPrefKey;
   private final int maxPlayerPrefDefault;
+  private Disposable pollingDisposable;
 
   /**
    * Constructor for GameViewModel.
@@ -59,6 +62,7 @@ public class GameViewModel extends ViewModel implements DefaultLifecycleObserver
     pending = new CompositeDisposable();
     user = new MutableLiveData<>(null);
     selectedCard = new MutableLiveData<>();
+    gameLeft = new MutableLiveData<>(false);
     prefs = PreferenceManager.getDefaultSharedPreferences(context);
     maxPlayerPrefKey = context.getString(R.string.player_max_pref_key);
     maxPlayerPrefDefault = context.getResources().getInteger(R.integer.max_player_pref_default);
@@ -92,6 +96,10 @@ public class GameViewModel extends ViewModel implements DefaultLifecycleObserver
    */
   public LiveData<Card> getSelectedCard() {
     return selectedCard;
+  }
+
+  public LiveData<Boolean> getGameLeft () {
+    return gameLeft;
   }
 
   /**
@@ -165,6 +173,28 @@ public class GameViewModel extends ViewModel implements DefaultLifecycleObserver
         );
   }
 
+  public void leaveGame() {
+    Game currentGame = game.getValue();
+    if (currentGame != null) {
+      if (pollingDisposable != null && !pollingDisposable.isDisposed()) {
+        pollingDisposable.dispose();
+      }
+      gameService.leaveGame(currentGame)
+          .subscribe(
+              () -> {
+                // Optionally, you can handle the game state after leaving,
+                // such as resetting the game LiveData.
+                game.postValue(null);  // Clear game data after leaving
+                Log.d(TAG, "Left game successfully.");
+              },
+              this::postThrowable,
+              pending
+          );
+    } else {
+      Log.e(TAG, "Cannot leave game: No current game found.");
+    }
+  }
+
   /**
    * Polls the UNO webservice for Game updates.
    */
@@ -172,7 +202,7 @@ public class GameViewModel extends ViewModel implements DefaultLifecycleObserver
     User currentUser = user.getValue();
     Game currentGame = game.getValue();
     if (currentUser != null && currentGame != null && currentGame.getGameState() != GameState.COMPLETED) {
-      gameService.getGame(currentGame)
+      pollingDisposable = gameService.getGame(currentGame)
           .subscribe(
               (g) -> {
                 if (isCurrentPlayersTurn(g, currentUser)) {
@@ -184,9 +214,10 @@ public class GameViewModel extends ViewModel implements DefaultLifecycleObserver
                   pollForUpdates();
                 }
               },
-              this::postThrowable,
-              pending
+              this::postThrowable
+
           );
+      pending.add(pollingDisposable);
     }
   }
 

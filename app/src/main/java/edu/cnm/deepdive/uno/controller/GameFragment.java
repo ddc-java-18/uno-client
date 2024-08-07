@@ -122,6 +122,7 @@ public class GameFragment extends Fragment {
     binding.startGameBtn.setOnClickListener((v) -> gameViewModel.startGame());
     binding.drawCardBtn.setOnClickListener((v) -> gameViewModel.drawCard());
     binding.submitMoveBtn.setOnClickListener((v) -> submitMove(view));
+    binding.leaveGameBtn.setOnClickListener((v) -> gameViewModel.leaveGame());
 
   }
 
@@ -174,6 +175,10 @@ public class GameFragment extends Fragment {
                     + card.getSuit());
               });
           binding.recyclerViewHand.setAdapter(adapter);
+          binding.startGameBtn.setEnabled(game.getGameState() == GameState.CREATED);
+          binding.leaveGameBtn.setEnabled(game.getGameState() != GameState.COMPLETED);
+          binding.drawCardBtn.setEnabled(hand.isTurn());
+          binding.submitMoveBtn.setEnabled(hand.isTurn());
           break;
         }
       }
