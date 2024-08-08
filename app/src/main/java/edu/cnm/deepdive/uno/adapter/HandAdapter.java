@@ -65,7 +65,7 @@ public class HandAdapter extends RecyclerView.Adapter<ViewHolder> {
    *
    * @param position The position of the clicked item in the card list.
    * @throws IndexOutOfBoundsException if the specified position is out of range
-   *                                    (position < 0 || position >= cardList.size()).
+   *                                    (position &lt; 0 || position >= cardList.size()).
    */
   public void onItemClicked(int position) {
     Card c = cardList.get(position);

@@ -18,23 +18,27 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintVertical_bias="0"
-    app:layout_constraintHeight_percent="0.10"/>
+    app:layout_constraintHeight_percent="0.10"
+    tools:listitem="@layout/item_user"/>
 
   <ImageView
     android:id="@+id/discard_top_card"
-    android:layout_width="270dp"
-    android:layout_height="270dp"
+    android:layout_width="wrap_content"
+    android:layout_height="0dp"
+    android:scaleType="fitCenter"
+    android:adjustViewBounds="true"
     android:layout_margin="@dimen/half_static_spacing"
     app:layout_constraintTop_toBottomOf="@id/recycler_view_users"
     app:layout_constraintBottom_toTopOf="@id/button_layout"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"/>
+    app:layout_constraintEnd_toEndOf="parent"
+    tools:src="@drawable/card_wild"/>
 
   <LinearLayout
     android:id="@+id/button_layout"
-    android:layout_width="match_parent"
+    android:layout_width="0dp"
     android:layout_height="wrap_content"
-    app:layout_constraintTop_toBottomOf="@id/discard_top_card"
+    android:theme="@style/Button"
     app:layout_constraintBottom_toTopOf="@id/recycler_view_hand"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
@@ -51,6 +55,7 @@
       android:id="@+id/submit_move_btn"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:visibility="gone"
       android:text="@string/make_move"
       />
 
@@ -58,8 +63,14 @@
       android:id="@+id/draw_card_btn"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="@string/draw_card"
-      />
+      android:visibility="gone"
+      android:text="@string/draw_card"/>
+
+    <Button
+      android:id="@+id/leave_game_btn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/leave_game"/>
 
   </LinearLayout>
 
@@ -73,7 +84,7 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     tools:listitem="@layout/item_card"
-    app:layout_constraintHeight_percent="0.25"
+    app:layout_constraintHeight_percent="0.35"
     app:layout_constraintVertical_bias="1.0"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

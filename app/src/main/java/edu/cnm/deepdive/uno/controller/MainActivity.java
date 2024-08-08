@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     setContentView(binding.getRoot());
     setupNavigation();
     setupViewModel();
+    observeGameState();
   }
 
   @Override
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
   private void setupViewModel () {
     ViewModelProvider provider = new ViewModelProvider(this);
     loginViewModel = provider.get(LoginViewModel.class);
+    gameViewModel = provider.get(GameViewModel.class);
     loginViewModel.getAccount()
         .observe(this, (account) -> {
           if (account == null) {
@@ -82,5 +84,13 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
           }
         });
+
+  }
+  private void observeGameState() {
+    gameViewModel.getGame().observe(this, (game) -> {
+      if (game == null) {
+        navController.navigate(R.id.lobby_fragment); //
+      }
+    });
   }
 }

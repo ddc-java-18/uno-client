@@ -23,6 +23,7 @@
     android:layout_width="match_parent"
     android:layout_height="144dp"
     android:orientation="vertical"
+    android:theme="@style/Button"
     app:layout_constraintTop_toBottomOf="@id/uno_landing_logo"
     app:layout_constraintBottom_toTopOf="@id/landing_page_title"
     app:layout_constraintStart_toStartOf="parent"

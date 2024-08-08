@@ -256,7 +256,7 @@ loadScripts(document, 'script');</script>
 <dd><code>position</code> - The position of the clicked item in the card list.</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IndexOutOfBoundsException.html" title="class or interface in java.lang" class="external-link">IndexOutOfBoundsException</a></code> - if the specified position is out of range
-                                    (position <span class="invalid-tag">invalid input: '&lt;'</span> 0 || position &gt;= cardList.size()).</dd>
+                                    (position &lt; 0 || position &gt;= cardList.size()).</dd>
 </dl>
 </section>
 </li>

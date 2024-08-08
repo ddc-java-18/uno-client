@@ -1,11 +1,14 @@
 package edu.cnm.deepdive.uno.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
+import edu.cnm.deepdive.uno.R;
 import edu.cnm.deepdive.uno.databinding.ItemUserBinding;
 import edu.cnm.deepdive.uno.model.domain.Hand;
 import edu.cnm.deepdive.uno.model.domain.User;
@@ -15,6 +18,9 @@ public class UsersAdapter extends RecyclerView.Adapter<ViewHolder> {
 
   private final List<Hand> hands;
   private final LayoutInflater layoutInflater;
+  @ColorInt
+  private final int currentPlayerBackground;
+
 
   /**
    * Constructs a new UsersAdapter instance.
@@ -22,9 +28,10 @@ public class UsersAdapter extends RecyclerView.Adapter<ViewHolder> {
    * @param context The context in which the adapter is running, used for layout inflation.
    * @param hands   A list of Hand objects representing the hands to be managed by the adapter.
    */
-  public UsersAdapter(Context context, List<Hand> hands) {
+  public UsersAdapter(@NonNull Context context,@NonNull List<Hand> hands) {
     this.hands = hands;
     this.layoutInflater = LayoutInflater.from(context);
+    currentPlayerBackground = context.getColor(R.color.current_player_background);
   }
 
   @NonNull
@@ -71,6 +78,7 @@ public class UsersAdapter extends RecyclerView.Adapter<ViewHolder> {
       binding.userDisplayName.setText(hand.getUser().getDisplayName());
       String numberOfCards = String.valueOf(hand.getNumberOfCards());
       binding.userCardCount.setText(numberOfCards);
+      binding.getRoot().setBackgroundColor(hand.isTurn() ? currentPlayerBackground : Color.TRANSPARENT);
     }
   }
 }

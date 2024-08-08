@@ -6,24 +6,37 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:foreground="?attr/selectableItemBackground"
-  app:shapeAppearance="?attr/shapeAppearanceCornerSmall"
+  app:shapeAppearance="?attr/shapeAppearanceCornerMedium"
   android:layout_margin="@dimen/half_static_spacing">
 
-  <ImageView
-    android:id="@+id/card_image"
+  <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:scaleType="fitCenter"
-    android:adjustViewBounds="true"
-    android:contentDescription="@string/card_image_description"
-    tools:src="@drawable/card_wild"/>
+    android:layout_height="match_parent">
 
-  <ImageView
-    android:id="@+id/selected_card"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:contentDescription="selected card icon"
-    android:src="@drawable/selected_icon"/>
-<!--    app:tint="@color/card_green"-->
+    <ImageView
+      android:id="@+id/card_image"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:scaleType="fitCenter"
+      android:adjustViewBounds="true"
+      android:contentDescription="@string/card_image_description"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      tools:src="@drawable/card_wild"/>
+
+    <ImageView
+      android:id="@+id/selected_card"
+      android:layout_width="@dimen/checkmark_size"
+      android:layout_height="@dimen/checkmark_size"
+      android:layout_margin="@dimen/full_dynamic_spacing"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      android:contentDescription="selected card icon"
+      android:src="@drawable/selected_icon"/>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+  <!--    app:tint="@color/card_green"-->
 
 </com.google.android.material.carousel.MaskableFrameLayout>
